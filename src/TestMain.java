@@ -30,7 +30,7 @@ public class TestMain {
 		
 		Run testRun = new Run(testSampleList, testPrepPlate, testTargetPlate);
 		
-		System.out.println("Test script complete");
+		System.out.println("Test script completed");
 	}
 
 }

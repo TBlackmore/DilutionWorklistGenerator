@@ -3,7 +3,6 @@ public class TestMain {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		System.out.println("Test Script");
 		
 		
 		//all of this information needs to be provided from the form/gui
@@ -31,6 +30,7 @@ public class TestMain {
 		
 		Run testRun = new Run(testSampleList, testPrepPlate, testTargetPlate);
 		
+		System.out.println("Test script complete");
 	}
 
 }

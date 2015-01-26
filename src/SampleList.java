@@ -21,6 +21,7 @@ public class SampleList {
 	
 	//modifiers
 	public int addSample(Sample sample) {
+		sample.setList(this);
 		samples.add(sample);
 		return samples.size();
 	}

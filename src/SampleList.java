@@ -4,7 +4,7 @@ public class SampleList {
 	
 	private Plate prepPlateType;
 	private Plate targetPlateType;
-	
+	private RunController runController;
 	private ArrayList<Sample> samples;
 	
 	//constructor..
@@ -24,5 +24,10 @@ public class SampleList {
 		sample.setList(this);
 		samples.add(sample);
 		return samples.size();
+	}
+	
+	public boolean setRunController(RunController runController) {
+		this.runController = runController;
+		return true;
 	}
 }

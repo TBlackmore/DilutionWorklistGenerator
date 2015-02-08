@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-
+import java.lang.Math;
 /**
  * @author Tim
  *
@@ -48,22 +48,35 @@ public class Sample {
 	 * @return
 	 */
 	public double generateDilutions (Plate prepPlate, Plate targetPlate) {
-		while ((targetPlate.getMaxDil() * currentDilution) <= targetDilutionFactor) {
-			//create prep dilution
-			currentDilution = currentDilution * prepPlate.getMaxDil();
-			Dilution newPrepDilution = new Dilution(prepPlate.getMinAspVol(), 
-					prepPlate.getWellVol() - prepPlate.getMinAspVol(), currentDilution);
+		
+		
+		double nextSampleVol;
+		//Keep adding prep dilutions until the targetDilutionFactor can be reached in the target plate
+		while ((targetPlate.getMaxDil() * currentDilution) < targetDilutionFactor) {
+			
+			// The sample volume is the required volume to get the target dilution, or the minimum aspiration volume
+			nextSampleVol = Math.max(prepPlate.getMinAspVol(), (currentDilution/targetDilutionFactor)*prepPlate.getWellVol());
+			
+			// Update current dilution value
+			currentDilution = currentDilution * ( 1.0 / (nextSampleVol / prepPlate.getWellVol()));
+			
+			// Add new dilution to prepDilutions array List
+			Dilution newPrepDilution = new Dilution(nextSampleVol, 
+					prepPlate.getWellVol() - nextSampleVol, currentDilution);
 			this.prepDilutions.add(newPrepDilution);
-			System.out.println("Added prep dilutions for sample: " + name + " currentDilution = " + currentDilution);
-			newPrepDilution.print();
+			
+			//newPrepDilution.print();
 		}
-		//enough prep dilutions have been added so that the target dilution can be reached
+		// create the final dilution into the target plate
+		// final dilution will be neat if the target dilution could not be reached during the transfer step
+		
 		double targetDilStep = targetDilutionFactor/currentDilution;
 		double targetSampleVol = targetPlate.getWellVol() / targetDilStep;
 		currentDilution = currentDilution * targetDilStep;
 		targetDilution = new Dilution(targetSampleVol, targetPlate.getWellVol() - targetSampleVol, currentDilution);
 		System.out.println("Added target dilution for sample: " + name + " currentDilution = " + currentDilution);
 		targetDilution.print();
+		System.out.println("sample dilutions generated");
 		return 0;
 	}
 }

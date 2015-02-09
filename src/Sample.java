@@ -49,7 +49,7 @@ public class Sample {
 	 */
 	public double generateDilutions (Plate prepPlate, Plate targetPlate) {
 		
-		//test
+		//tests
 		double nextSampleVol;
 		//Keep adding prep dilutions until the targetDilutionFactor can be reached in the target plate
 		while ((targetPlate.getMaxDil() * currentDilution) < targetDilutionFactor) {

@@ -14,8 +14,8 @@ public class Dilution {
 		this.totalDilutionFactor = totalDilutionFactor;
 	}
 	
-	public void print() {
-		System.out.println("sampleVol = " + sampleVol + ", bufferVol = " + bufferVol +
+	public String getDetails() {
+		return("sampleVol = " + sampleVol + ", bufferVol = " + bufferVol +
 				", stepDil = " + stepDilutionFactor + ", totalDil = " + totalDilutionFactor);
 	}
 }

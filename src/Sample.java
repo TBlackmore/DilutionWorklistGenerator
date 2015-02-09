@@ -39,11 +39,10 @@ public class Sample {
 	
 	/**
 	 * Check if the target dilution can be reached.
-	 * If the target dilution cannot be reached create another prep dilution
+	 * If the target dilution cannot be reached create prep dilution(s)
 	 * Then creates the target dilution
 	 * 
-	 * Fix me: prep dilutions can overshoot target dilution when target requires more than max tartget step but less than a whole prep step
-	 * 
+	 *
 	 * @param plate
 	 * @return
 	 */
@@ -65,7 +64,7 @@ public class Sample {
 					prepPlate.getWellVol() - nextSampleVol, currentDilution);
 			this.prepDilutions.add(newPrepDilution);
 			
-			//newPrepDilution.print();
+			System.out.println(newPrepDilution.getDetails());
 		}
 		// create the final dilution into the target plate
 		// final dilution will be neat if the target dilution could not be reached during the transfer step
@@ -75,7 +74,7 @@ public class Sample {
 		currentDilution = currentDilution * targetDilStep;
 		targetDilution = new Dilution(targetSampleVol, targetPlate.getWellVol() - targetSampleVol, currentDilution);
 		System.out.println("Added target dilution for sample: " + name + " currentDilution = " + currentDilution);
-		targetDilution.print();
+		System.out.println(targetDilution.getDetails());
 		System.out.println("sample dilutions generated");
 		return 0;
 	}

@@ -1,7 +1,13 @@
 
 public class TestMain {
 	
-	public static 
+	public static double[] dilutionVols (double dilutionFactor, double totalVol) {
+		double sampleVol = totalVol / dilutionFactor;
+		double bufferVol = totalVol - sampleVol;
+		double[] volumes = {sampleVol, bufferVol};
+		return volumes;
+	}
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		

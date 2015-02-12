@@ -1,0 +1,71 @@
+Sample Number,sample name,Source Name,Source Labware,Sample Type,Co-Ords (eg A2),Well Number,Starting dilution,Additional Serial dilutions,Serial Dilution Factor,Dilution Replicates (eg 2 is duplicate),Number of times to assay each replicate,Assay This Sample?
+1,Standard Not Activated MZ20111129B,Controls,Thermo 0.5 mL 96 Well,Standard,,1,55000,10,1.7,4,1,TRUE
+2,Control S - 503232 - 930,Controls,Thermo 0.5 mL 96 Well,Standard,,2,50.84493042,10,1.7,1,3,TRUE
+3,Control N - 503194,Controls,Thermo 0.5 mL 96 Well,Control,,3,500,1,2,1,3,TRUE
+4,Control P - 509965 - 370,Controls,Thermo 0.5 mL 96 Well,Control,,4,300,1,2,1,3,TRUE
+5,Ferment CSL689 x4130 clarified bulk,Controls,Thermo 0.5 mL 96 Well,Control,,5,10000,1,2,1,3,TRUE
+6,2nd Ref Standard,Controls,Thermo 0.5 mL 96 Well,Control,,6,1250000,1,2,1,3,TRUE
+7,X4504 C1 WD0,Samples,Thermo 1.4 mL 96 Well,Sample,,1,600,0,2,1,3,TRUE
+8,X4504 C1 WD1,Samples,Thermo 1.4 mL 96 Well,Sample,,2,1200,0,2,1,3,TRUE
+9,X4504 C1 WD2,Samples,Thermo 1.4 mL 96 Well,Sample,,3,3600,0,2,1,3,TRUE
+10,X4504 C1 WD3,Samples,Thermo 1.4 mL 96 Well,Sample,,4,7000,0,2,1,3,TRUE
+11,X4504 C1 WD4,Samples,Thermo 1.4 mL 96 Well,Sample,,5,10000,0,2,1,3,TRUE
+12,X4504 C1 WD5,Samples,Thermo 1.4 mL 96 Well,Sample,,6,14000,1,2,1,3,TRUE
+13,X4504 C1 WD6,Samples,Thermo 1.4 mL 96 Well,Sample,,7,18000,1,2,1,3,TRUE
+14,X4504 C1 WD7,Samples,Thermo 1.4 mL 96 Well,Sample,,8,20000,1,2,1,3,TRUE
+15,X4504 C2 WD0,Samples,Thermo 1.4 mL 96 Well,Sample,,9,600,0,2,1,3,TRUE
+16,X4504 C2 WD1,Samples,Thermo 1.4 mL 96 Well,Sample,,10,1200,0,2,1,3,TRUE
+17,X4504 C2 WD2,Samples,Thermo 1.4 mL 96 Well,Sample,,11,3600,0,2,1,3,TRUE
+18,X4504 C2 WD3,Samples,Thermo 1.4 mL 96 Well,Sample,,12,7000,0,2,1,3,TRUE
+19,X4504 C2 WD4,Samples,Thermo 1.4 mL 96 Well,Sample,,13,10000,0,2,1,3,TRUE
+20,X4504 C2 WD5,Samples,Thermo 1.4 mL 96 Well,Sample,,14,14000,1,2,1,3,TRUE
+21,X4504 C2 WD6,Samples,Thermo 1.4 mL 96 Well,Sample,,15,18000,1,2,1,3,TRUE
+22,X4504 C2 WD7,Samples,Thermo 1.4 mL 96 Well,Sample,,16,20000,1,2,1,3,TRUE
+23,X4504 C3 WD0,Samples,Thermo 1.4 mL 96 Well,Sample,,17,600,0,2,1,3,TRUE
+24,X4504 C3 WD1,Samples,Thermo 1.4 mL 96 Well,Sample,,18,1200,0,2,1,3,TRUE
+25,X4504 C3 WD2,Samples,Thermo 1.4 mL 96 Well,Sample,,19,3600,0,2,1,3,TRUE
+26,X4504 C3 WD3,Samples,Thermo 1.4 mL 96 Well,Sample,,20,7000,0,2,1,3,TRUE
+27,X4504 C3 WD4,Samples,Thermo 1.4 mL 96 Well,Sample,,21,10000,1,2,1,3,TRUE
+28,X4504 C3 WD5,Samples,Thermo 1.4 mL 96 Well,Sample,,22,14000,1,2,1,3,TRUE
+29,X4504 C3 WD6,Samples,Thermo 1.4 mL 96 Well,Sample,,23,18000,1,2,1,3,TRUE
+30,X4504 C3 WD7,Samples,Thermo 1.4 mL 96 Well,Sample,,24,20000,1,2,1,3,TRUE
+31,X4504 C4 WD0,Samples,Thermo 1.4 mL 96 Well,Sample,,25,600,0,2,1,3,TRUE
+32,X4504 C4 WD1,Samples,Thermo 1.4 mL 96 Well,Sample,,26,1200,0,2,1,3,TRUE
+33,X4504 C4 WD2,Samples,Thermo 1.4 mL 96 Well,Sample,,27,3600,0,2,1,3,TRUE
+34,X4504 C4 WD3,Samples,Thermo 1.4 mL 96 Well,Sample,,28,7000,0,2,1,3,TRUE
+35,X4504 C4 WD4,Samples,Thermo 1.4 mL 96 Well,Sample,,29,10000,1,2,1,3,TRUE
+36,X4504 C4 WD5,Samples,Thermo 1.4 mL 96 Well,Sample,,30,14000,1,2,1,3,TRUE
+37,X4504 C4 WD6,Samples,Thermo 1.4 mL 96 Well,Sample,,31,18000,1,2,1,3,TRUE
+38,X4504 C4 WD7,Samples,Thermo 1.4 mL 96 Well,Sample,,32,20000,1,2,1,3,TRUE
+39,X4504 D1 WD0,Samples,Thermo 1.4 mL 96 Well,Sample,,33,600,0,2,1,3,TRUE
+40,X4504 D1 WD1,Samples,Thermo 1.4 mL 96 Well,Sample,,34,1200,0,2,1,3,TRUE
+41,X4504 D1 WD2,Samples,Thermo 1.4 mL 96 Well,Sample,,35,3600,0,2,1,3,TRUE
+42,X4504 D1 WD3,Samples,Thermo 1.4 mL 96 Well,Sample,,36,7000,0,2,1,3,TRUE
+43,X4504 D1 WD4,Samples,Thermo 1.4 mL 96 Well,Sample,,37,10000,1,2,1,3,TRUE
+44,X4504 D1 WD5,Samples,Thermo 1.4 mL 96 Well,Sample,,38,14000,1,2,1,3,TRUE
+45,X4504 D1 WD6,Samples,Thermo 1.4 mL 96 Well,Sample,,39,18000,1,2,1,3,TRUE
+46,X4504 D1 WD7,Samples,Thermo 1.4 mL 96 Well,Sample,,40,20000,1,2,1,3,TRUE
+47,X4504 D2 WD0,Samples,Thermo 1.4 mL 96 Well,Sample,,41,600,0,2,1,3,TRUE
+48,X4504 D2 WD1,Samples,Thermo 1.4 mL 96 Well,Sample,,42,1200,0,2,1,3,TRUE
+49,X4504 D2 WD2,Samples,Thermo 1.4 mL 96 Well,Sample,,43,3600,0,2,1,3,TRUE
+50,X4504 D2 WD3,Samples,Thermo 1.4 mL 96 Well,Sample,,44,7000,0,2,1,3,TRUE
+51,X4504 D2 WD4,Samples,Thermo 1.4 mL 96 Well,Sample,,45,10000,1,2,1,3,TRUE
+52,X4504 D2 WD5,Samples,Thermo 1.4 mL 96 Well,Sample,,46,14000,1,2,1,3,TRUE
+53,X4504 D2 WD6,Samples,Thermo 1.4 mL 96 Well,Sample,,47,18000,1,2,1,3,TRUE
+54,X4504 D2 WD7,Samples,Thermo 1.4 mL 96 Well,Sample,,48,20000,1,2,1,3,TRUE
+55,X4504 D3 WD0,Samples,Thermo 1.4 mL 96 Well,Sample,,49,600,0,2,1,3,TRUE
+56,X4504 D3 WD1,Samples,Thermo 1.4 mL 96 Well,Sample,,50,1200,0,2,1,3,TRUE
+57,X4504 D3 WD2,Samples,Thermo 1.4 mL 96 Well,Sample,,51,3600,0,2,1,3,TRUE
+58,X4504 D3 WD3,Samples,Thermo 1.4 mL 96 Well,Sample,,52,7000,0,2,1,3,TRUE
+59,X4504 D3 WD4,Samples,Thermo 1.4 mL 96 Well,Sample,,53,10000,1,2,1,3,TRUE
+60,X4504 D3 WD5,Samples,Thermo 1.4 mL 96 Well,Sample,,54,14000,1,2,1,3,TRUE
+61,X4504 D3 WD6,Samples,Thermo 1.4 mL 96 Well,Sample,,55,18000,1,2,1,3,TRUE
+62,X4504 D3 WD7,Samples,Thermo 1.4 mL 96 Well,Sample,,56,20000,1,2,1,3,TRUE
+63,X4504 D4 WD0,Samples,Thermo 1.4 mL 96 Well,Sample,,57,600,0,2,1,3,TRUE
+64,X4504 D4 WD1,Samples,Thermo 1.4 mL 96 Well,Sample,,58,1200,0,2,1,3,TRUE
+65,X4504 D4 WD2,Samples,Thermo 1.4 mL 96 Well,Sample,,59,3600,0,2,1,3,TRUE
+66,X4504 D4 WD3,Samples,Thermo 1.4 mL 96 Well,Sample,,60,7000,0,2,1,3,TRUE
+67,X4504 D4 WD4,Samples,Thermo 1.4 mL 96 Well,Sample,,61,10000,1,2,1,3,TRUE
+68,X4504 D4 WD5,Samples,Thermo 1.4 mL 96 Well,Sample,,62,14000,1,2,1,3,TRUE
+69,X4504 D4 WD6,Samples,Thermo 1.4 mL 96 Well,Sample,,63,18000,1,2,1,3,TRUE
+70,X4504 D4 WD7,Samples,Thermo 1.4 mL 96 Well,Sample,,64,20000,1,2,1,3,TRUE

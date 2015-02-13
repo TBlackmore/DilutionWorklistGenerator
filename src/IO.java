@@ -7,11 +7,16 @@ public class IO {
     public Scanner s;
     
     public IO () {
+
+    }
+    
+    public boolean openFile(String filename) {
         try {
-            s = new Scanner(new BufferedReader(new FileReader("example_input.csv")));
+            s = new Scanner(new BufferedReader(new FileReader(filename)));
             while (s.hasNextLine()) {
                 System.out.println(s.nextLine());
             }
+            return true;
         } catch (IOException e1) {
             System.out.println("Caught IOException: " + e1.getMessage());
         } catch (Exception e2) {
@@ -21,6 +26,7 @@ public class IO {
                 s.close();
             }
         }
+        return false;
     }
     
 }

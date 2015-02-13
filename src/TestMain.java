@@ -9,8 +9,6 @@ public class TestMain {
 	}
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
 		
 		//all of this information needs to be provided from the form/gui
 		
@@ -42,7 +40,7 @@ public class TestMain {
 		
 		
 		RunController testRun = new RunController(testSampleList, testPrepPlate, testTargetPlate);
-		
+		IO runIO = new IO();
 		System.out.println("Test script completed?");
 	}
 

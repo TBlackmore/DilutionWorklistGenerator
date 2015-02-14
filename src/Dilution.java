@@ -18,4 +18,12 @@ public class Dilution {
 		return("sampleVol = " + sampleVol + ", bufferVol = " + bufferVol +
 				", stepDil = " + stepDilutionFactor + ", totalDil = " + totalDilutionFactor);
 	}
+	
+	public double getSampleVol() {
+		return sampleVol;
+	}
+	
+	public double getBufferVol() {
+		return bufferVol;
+	}
 }

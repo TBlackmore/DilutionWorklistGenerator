@@ -8,6 +8,10 @@ public class TestMain {
 		return volumes;
 	}
 	
+	public static double dilutionFactor (double sampleVol, double bufferVol) {
+		return 1 / (sampleVol / (sampleVol + bufferVol));
+	}
+	
 	public static void main(String[] args) {
 		
 		//all of this information needs to be provided from the form/gui
@@ -26,7 +30,7 @@ public class TestMain {
 		Plate testTargetPlate = new Plate(16,32,"200 uL masterblock", 180, 20);
 		
 		//testSamples
-		Sample sample1 = new Sample("sample1",testSourcePlate.getWell(1,1),6000); //Can't reach target dil during transfer
+		Sample sample1 = new Sample("sample1",testSourcePlate.getWell(1,1),6000);
 		Sample sample2 = new Sample("sample2",testSourcePlate.getWell(1,1),10); //Can't reach target dil during transfer on first step
 		Sample sample3 = new Sample("sample3",testSourcePlate.getWell(1,1),9); //First step is target dil during transfer
 		Sample sample4 = new Sample("sample4",testSourcePlate.getWell(1,1),1); // No dilution, to be run neat

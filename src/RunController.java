@@ -5,8 +5,8 @@ public class RunController {
 	
 	private SampleList sampleList;
 	private Sample currentSample;
-	private Plate prepPlateType;
-	private Plate targetPlateType;
+	private Plate prepPlate;
+	private Plate targetPlate;
 	
 	//Should these be arrays or array lists?
 	
@@ -16,8 +16,8 @@ public class RunController {
 	
 	public RunController(SampleList sampleList, Plate prepPlateType, Plate targetPlateType) {
 		this.sampleList = sampleList;
-		this.prepPlateType = prepPlateType;
-		this.targetPlateType = targetPlateType;
+		this.prepPlate = prepPlateType;
+		this.targetPlate = targetPlateType;
 		this.sampleList.setRunController(this);
 		//Maybe all of the source plate details should just be in with the sample list
 		//this.sourcePlates = sourcePlates;
@@ -26,19 +26,66 @@ public class RunController {
 		
 		for (int s = 0; s < sampleList.getAllSamples().size(); s++) {
 			currentSample = sampleList.getAllSamples().get(s);
-			currentSample.generateDilutions(prepPlateType, targetPlateType);
+			generateDilutions(currentSample);
 			
 			//while (currentSample.getTargetDilutionFactor() < currentSample.addPrepDilution(prepPlateType)) {
 			//	System.out.println("PrepDilution added for sample " + currentSample.getName());
 			//}
 		}
 	}
-	
 	public Plate getPrepPlateType() {
-		return this.prepPlateType;
+		return this.prepPlate;
 	}
 	
 	public Plate getTargetPlateType() {
-		return this.targetPlateType;
+		return this.targetPlate;
 	}
+	
+	/**
+	 * Check if the target dilution can be reached.
+	 * If the target dilution cannot be reached create prep dilution(s)
+	 * Then creates the target dilution
+	 * 
+	 *
+	 * @param plate
+	 * @return
+	 */
+	public Sample generateDilutions (Sample sample) {
+		
+		//tests
+		double nextSampleVol;
+		double targetDilutionFactor = sample.getTargetDilutionFactor();
+		double currentDilution = 1;
+		Dilution targetDilution = sample.getTargetDilution();
+		
+		//Keep adding prep dilutions until the targetDilutionFactor can be reached in the target plate
+		while ((targetPlate.getMaxDil() * currentDilution) < targetDilutionFactor) {
+			
+			// The sample volume is the required volume to get the target dilution, or the minimum aspiration volume
+			nextSampleVol = Math.max(prepPlate.getMinAspVol(), (currentDilution/targetDilutionFactor)*prepPlate.getWellVol());
+			
+			// Update current dilution value
+			currentDilution = currentDilution * ( 1.0 / (nextSampleVol / prepPlate.getWellVol()));
+			
+			// Add new dilution to prepDilutions array List
+			Dilution newPrepDilution = new Dilution(nextSampleVol, 
+					prepPlate.getWellVol() - nextSampleVol, currentDilution);
+			sample.getPrepDilutions().add(newPrepDilution);
+			
+			System.out.println(newPrepDilution.getDetails());
+		}
+		// create the final dilution into the target plate
+		// final dilution will be neat if the target dilution could not be reached during the transfer step
+		
+		double targetDilStep = targetDilutionFactor/currentDilution;
+		double targetSampleVol = targetPlate.getWellVol() / targetDilStep;
+		currentDilution = currentDilution * targetDilStep;
+		targetDilution = new Dilution(targetSampleVol, targetPlate.getWellVol() - targetSampleVol, currentDilution);
+		sample.setTargetDilution(targetDilution);
+		System.out.println("Added target dilution for sample: " + sample.getName() + " currentDilution = " + currentDilution);
+		System.out.println(targetDilution.getDetails());
+		System.out.println("sample dilutions generated");
+		return sample;
+	}
+	
 }

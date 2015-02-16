@@ -31,9 +31,9 @@ public class TestMain {
 		
 		//testSamples
 		Sample sample1 = new Sample("sample1",testSourcePlate.getWell(1,1),6000);
-		Sample sample2 = new Sample("sample2",testSourcePlate.getWell(1,1),10); //Can't reach target dil during transfer on first step
-		Sample sample3 = new Sample("sample3",testSourcePlate.getWell(1,1),9); //First step is target dil during transfer
-		Sample sample4 = new Sample("sample4",testSourcePlate.getWell(1,1),1); // No dilution, to be run neat
+		Sample sample2 = new Sample("sample2",testSourcePlate.getWell(2,1),10); //Can't reach target dil during transfer on first step
+		Sample sample3 = new Sample("sample3",testSourcePlate.getWell(3,1),9); //First step is target dil during transfer
+		Sample sample4 = new Sample("sample4",testSourcePlate.getWell(4,1),1); // No dilution, to be run neat
 		
 		//add test samples to a sample list
 		SampleList testSampleList = new SampleList(testPrepPlate, testTargetPlate);
@@ -43,8 +43,8 @@ public class TestMain {
 		testSampleList.addSample(sample4);
 		
 		
-		IO runIO = new IO();
-		runIO.openFile("example_input.csv");
+		//IO runIO = new IO();
+		//runIO.openFile("example_input.csv");
 		RunController testRun = new RunController(testSampleList, testPrepPlate, testTargetPlate);
 		System.out.println("Test script completed?");
 	}

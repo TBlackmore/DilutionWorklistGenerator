@@ -20,6 +20,11 @@ public class Plate {
 		this.minAspVol = minAspVol;
 		this.plateType = plateType;
 		this.wells = new Well[rows][cols];
+		for (int r = 0 ; r < rows ; r++) {
+			for (int c = 0 ; c < cols ; c++) {
+				wells[r][c] = new Well(this, r, c);
+			}
+		}
 	}
 	
 	//Methods

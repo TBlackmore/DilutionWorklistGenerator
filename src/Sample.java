@@ -21,6 +21,7 @@ public class Sample {
 		this.targetDilutionFactor = targetDilutionFactor;
 		//this.sampleList = sampleList;
 		this.prepDilutions = new ArrayList<Dilution>();
+		//System.out.println(currentSource);
 		
 	}
 	
@@ -45,6 +46,18 @@ public class Sample {
 	}
 	public String getName() {
 		return this.name;
+	}
+	public Well getCurrentSource() {
+		return currentSource;
+	}
+	public String getInfo() {
+		String info;
+		info = "Sample Name: " + this.name + "\n";
+		for (int i = 0 ; i < prepDilutions.size() ; i++) {
+			info = info + "S: " + prepDilutions.get(i).getDetails() + "\n";
+		}
+		info = info + "T: " + targetDilution.getDetails();
+		return info;
 	}
 	
 }

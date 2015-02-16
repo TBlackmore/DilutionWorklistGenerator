@@ -16,7 +16,8 @@ public class Dilution {
 	
 	public String getDetails() {
 		return("sampleVol = " + sampleVol + ", bufferVol = " + bufferVol +
-				", stepDil = " + stepDilutionFactor + ", totalDil = " + totalDilutionFactor);
+				", stepDil = " + stepDilutionFactor + ", totalDil = " + totalDilutionFactor
+				+ ", sourceWell = " + sourceWell + ", well = " + well);
 	}
 	
 	public double getSampleVol() {
@@ -25,5 +26,13 @@ public class Dilution {
 	
 	public double getBufferVol() {
 		return bufferVol;
+	}
+	public void setWell(Well well) {
+		if (well.setDilution(this)) {
+			this.well = well;			
+		};
+	}
+	public void setSourceWell(Well sourceWell) {
+		this.sourceWell = sourceWell;
 	}
 }

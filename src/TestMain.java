@@ -45,7 +45,7 @@ public class TestMain {
 		
 		//IO runIO = new IO();
 		//runIO.openFile("example_input.csv");
-		RunController testRun = new RunController(testSampleList, testPrepPlate, testTargetPlate);
+		RunController testRun = new RunController(testSampleList, testPrepPlate, testTargetPlate, testSourcePlates);
 		System.out.println("Test script completed?");
 	}
 

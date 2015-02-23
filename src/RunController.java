@@ -7,6 +7,7 @@ public class RunController {
 	private Sample currentSample;
 	private Plate prepPlate;
 	private Plate targetPlate;
+	private Plate[] sourcePlates;
 	
 	//Should these be arrays or array lists?
 	
@@ -14,7 +15,8 @@ public class RunController {
 	//private ArrayList<Plate> prepPlates;
 	//private ArrayList<Plate> targetPlates;
 	
-	public RunController(SampleList sampleList, Plate prepPlateType, Plate targetPlateType) {
+	public RunController(SampleList sampleList, Plate prepPlateType, Plate targetPlateType,
+			Plate[] sourcePlates) {
 		this.sampleList = sampleList;
 		this.prepPlate = prepPlateType;
 		this.targetPlate = targetPlateType;
@@ -106,7 +108,8 @@ public class RunController {
 			pd = s.getPrepDilutions();
 			//Assign source well to the source well of the first prep or target dilution.
 			if (pd.size() > 0) {
-				pd.get(0).setSourceWell(s.getCurrentSource());
+				pd.get(0).setSourceWell(new Well (sourcePlates[0]));
+				//pd.get(0).setSourceWell(s.getCurrentSource());
 			} else {
 				s.getTargetDilution().setSourceWell(s.getCurrentSource());
 				//System.out.println("sourceWell set to " + s.getTargetDilution());

@@ -37,7 +37,7 @@ public class RunControllerTest {
 		testSampleList.addSample(sample3);
 		testSampleList.addSample(sample4);
 		
-		RunController testRun = new RunController(testSampleList, testPrepPlate, testTargetPlate);
+		RunController testRun = new RunController(testSampleList, testPrepPlate, testTargetPlate, testSourcePlates);
 		double[][][] expectedVols = new double[][][] {
 				{{20,380},{20,380},{26.666,373.333},{180,0}},
 				{{40,360},{180,0}},

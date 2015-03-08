@@ -1,42 +1,28 @@
 import java.util.ArrayList;
 
 public class RunController {
-	
-	
-	private SampleList sampleList;
-	private Sample currentSample;
+
+	private ArrayList<Sample> samples;
 	private Plate prepPlate;
 	private Plate targetPlate;
 	private Plate[] sourcePlates;
+	private Sample currentSample;
 	
-	//Should these be arrays or array lists?
-	
-	//private ArrayList<Plate> sourcePlates;
-	//private ArrayList<Plate> prepPlates;
-	//private ArrayList<Plate> targetPlates;
-	
-	public RunController(SampleList sampleList, Plate prepPlateType, Plate targetPlateType,
-			Plate[] sourcePlates) {
-		this.sampleList = sampleList;
+	public RunController(Plate prepPlateType, Plate targetPlateType,
+			Plate[] sourcePlates, ArrayList<Sample> samples) {
 		this.prepPlate = prepPlateType;
 		this.targetPlate = targetPlateType;
-		this.sampleList.setRunController(this);
-		//Maybe all of the source plate details should just be in with the sample list
-		//this.sourcePlates = sourcePlates;
-		//this.prepPlates = new ArrayList<Plate>();
-		//this.targetPlates[0] = targetPlates;
-		
-		for (int s = 0; s < sampleList.getAllSamples().size(); s++) {
-			currentSample = sampleList.getAllSamples().get(s);
+		this.samples = samples;
+
+		for (int s = 0; s < samples.size(); s++) {
+			currentSample = samples.get(s);
 			generateDilutions(currentSample);
-			//while (currentSample.getTargetDilutionFactor() < currentSample.addPrepDilution(prepPlateType)) {
-			//	System.out.println("PrepDilution added for sample " + currentSample.getName());
-			//}
 		}
-		arrangeDilutions(this.sampleList);
+		
+		arrangeDilutions(samples);
 		//Print out the sample info for each sample
-		for (int s = 0; s < sampleList.getAllSamples().size(); s++) {
-			currentSample = sampleList.getAllSamples().get(s);
+		for (int s = 0; s < samples.size(); s++) {
+			currentSample = samples.get(s);
 			System.out.println(currentSample.getInfo());
 		}
 	}
@@ -100,19 +86,16 @@ public class RunController {
 	 * this arrangement dilutes samples across a plate, until the transfer step is reached
 	 * @param sampleList
 	 */
-	public void arrangeDilutions(SampleList sampleList) {
-		ArrayList<Sample> sl = sampleList.getAllSamples();
+	public void arrangeDilutions(ArrayList<Sample> samples) {
+		
 		ArrayList<Dilution> pd;
-		for (int i = 0 ; i < sl.size(); i ++) {
-			Sample s = sl.get(i);
+		for (int i = 0 ; i < samples.size(); i ++) {
+			Sample s = samples.get(i);
 			pd = s.getPrepDilutions();
 			//Assign source well to the source well of the first prep or target dilution.
 			if (pd.size() > 0) {
-				pd.get(0).setSourceWell(new Well (sourcePlates[0]));
-				//pd.get(0).setSourceWell(s.getCurrentSource());
 			} else {
-				s.getTargetDilution().setSourceWell(s.getCurrentSource());
-				//System.out.println("sourceWell set to " + s.getTargetDilution());
+				
 			}
 			
 			for (int j = 0 ; j < pd.size(); j++) {
@@ -120,5 +103,4 @@ public class RunController {
 			}
 		}
 	}
-	
 }

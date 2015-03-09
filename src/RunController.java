@@ -39,9 +39,10 @@ public class RunController {
 	 * If the target dilution cannot be reached create prep dilution(s)
 	 * Then creates the target dilution
 	 * 
+	 * Takes a sample as an argument, and returns the sample with dilutions added
 	 *
-	 * @param plate
-	 * @return
+	 * @param sample
+	 * @return sample
 	 */
 	public Sample generateDilutions (Sample sample) {
 		
@@ -94,6 +95,7 @@ public class RunController {
 			pd = s.getPrepDilutions();
 			//Assign source well to the source well of the first prep or target dilution.
 			if (pd.size() > 0) {
+				
 			} else {
 				
 			}

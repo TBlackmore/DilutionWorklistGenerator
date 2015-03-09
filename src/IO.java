@@ -5,16 +5,20 @@ import java.util.Scanner;
 public class IO {
     
     public Scanner s;
+    public String[] line;
     
-    public IO () {
-
+    public IO (String filename) {
+    	openFile(filename);
     }
     
     public boolean openFile(String filename) {
         try {
             s = new Scanner(new BufferedReader(new FileReader(filename)));
             while (s.hasNextLine()) {
-                System.out.println(s.nextLine());
+                
+            	line = s.nextLine().split(",");
+                System.out.print(line);
+                
             }
             return true;
         } catch (IOException e1) {

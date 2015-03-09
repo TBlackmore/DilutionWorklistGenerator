@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class TestMain {
+public class Main {
 	
 	public static double[] dilutionVols (double dilutionFactor, double totalVol) {
 		double sampleVol = totalVol / dilutionFactor;
@@ -13,8 +13,15 @@ public class TestMain {
 		return 1 / (sampleVol / (sampleVol + bufferVol));
 	}
 	
+	public static int wellCol (int wellNumber, Plate plate) {
+		return 1 + ((wellNumber - 1) % plate.getColumnSize());
+	}
+	
+	public static int wellRow (int wellNumber, Plate plate) {
+		return 1 + ((wellNumber - 1) / plate.getColumnSize());
+	}
 	public static void main(String[] args) {
-		
+
 		//all of this information needs to be provided from the form/gui
 		
 		//source plate

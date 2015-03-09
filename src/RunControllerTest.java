@@ -18,10 +18,12 @@ public class RunControllerTest {
 		testSourcePlates[0] = testSourcePlate;
 		
 		//The type of prep plate to be used
-		Plate testPrepPlate = new Plate(8,16,"500uL masterblock", 400, 20);
+		Plate testPrepPlate = new Plate(8,12,"500uL masterblock", 400, 20);
 		
 		//the type of target plate to be used
 		Plate testTargetPlate = new Plate(16,32,"200 uL masterblock", 180, 20);
+		
+		
 		
 		// Can't reach target dil during transfer
 		Sample sample1 = new Sample("sample1",6000); 
@@ -39,17 +41,27 @@ public class RunControllerTest {
 		testSamples.add(sample4);
 		
 		RunController testRun = new RunController(testPrepPlate, testTargetPlate, testSourcePlates, testSamples);
+		// Define expected volumes for the given samples
 		double[][][] expectedVols = new double[][][] {
 				{{20,380},{20,380},{26.666,373.333},{180,0}},
 				{{40,360},{180,0}},
 				{{20,160}},
 				{{180,0}},
 				};
+		// Check the generated dilution volumes match the expected values to 0.001
+		// Loop through and check each prep dilution
+		// Then check the final target dilution
 		for (int s = 0 ; s < expectedVols.length - 1; s++) {			
 			for (int i = 0 ; i < expectedVols[s].length - 1; i++) {
-				//assertEquals(expectedVols[s][i][0], testSampleList.getAllSamples().get(s).getPrepDilutions().get(i).getSampleVol(), 0.001);
-				//assertEquals(expectedVols[s][i][1], testSampleList.getAllSamples().get(s).getPrepDilutions().get(i).getBufferVol(), 0.001);
+				//System.out.println(expectedVols[s][i][0] + " " + testSamples.get(s).getPrepDilutions().get(i).getSampleVol());
+				assertEquals(expectedVols[s][i][0], testSamples.get(s).getPrepDilutions().get(i).getSampleVol(), 0.001);
+				//System.out.println(expectedVols[s][i][1] + " " + testSamples.get(s).getPrepDilutions().get(i).getBufferVol());
+				assertEquals(expectedVols[s][i][1], testSamples.get(s).getPrepDilutions().get(i).getBufferVol(), 0.001);
 			}
+			//System.out.println("Target Sample " + expectedVols[s][expectedVols[s].length - 1][0] + " " + testSamples.get(s).getTargetDilution().getSampleVol());
+			assertEquals(expectedVols[s][expectedVols[s].length - 1][0], testSamples.get(s).getTargetDilution().getSampleVol(), 0.001);
+			//System.out.println("Target Buffer " + expectedVols[s][expectedVols[s].length - 1][1] + " " + testSamples.get(s).getTargetDilution().getBufferVol());
+			assertEquals(expectedVols[s][expectedVols[s].length - 1][1], testSamples.get(s).getTargetDilution().getBufferVol(), 0.001);
 		}
 		System.out.println("Breakpoint");
 	}

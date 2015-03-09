@@ -7,6 +7,7 @@ import java.lang.Math;
 public class Sample {
 	private String name;
 	private double targetDilutionFactor;
+	private Dilution source;
 	private ArrayList<Dilution> prepDilutions;
 	private Dilution targetDilution;
 	private Dilution[] serialDilutions;

@@ -20,7 +20,8 @@ public class IOTest {
 
 	@Test
 	public void test() {
-		testIO = new IO("example_input.csv");
+		testIO = new IO();
+		//testIO.openFile("example_input.csv");
 	}
 
 }

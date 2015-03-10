@@ -49,8 +49,9 @@ public class Main {
 		testSamples.add(sample3);
 		testSamples.add(sample4);
 		
-		//IO runIO = new IO();
-		//runIO.openFile("example_input.csv");
+		IO runIO = new IO();
+		ArrayList<Sample> importedSamples = runIO.openFile("example_input.csv");
+		
 		RunController testRun = new RunController(testPrepPlate, testTargetPlate, testSourcePlates, testSamples);
 		System.out.println("Test script completed?");
 	}

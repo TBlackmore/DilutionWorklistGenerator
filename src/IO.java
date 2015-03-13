@@ -30,7 +30,7 @@ public class IO {
     public ArrayList<Sample> openFile(String filename) {
         try {
             s = new Scanner(new BufferedReader(new FileReader(filename)));
-            s.nextLine();
+            System.out.println(s.nextLine());
             while (s.hasNextLine()) {
             	//Split string into pre-defined components
             	line = s.nextLine().split(",");

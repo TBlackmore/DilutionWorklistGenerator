@@ -14,7 +14,7 @@ public class Sample {
 	
 	private double currentDilution = 1;
 	
-	public Sample (String name, double targetDilutionFactor) {
+	public Sample (String sampleNumber, String name, double targetDilutionFactor) {
 		this.name = name;
 		this.targetDilutionFactor = targetDilutionFactor;
 		//this.sampleList = sampleList;

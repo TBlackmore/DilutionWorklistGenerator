@@ -9,7 +9,7 @@ public class IO {
     public Sample newSample;
     public ArrayList<Sample> sampleList = new ArrayList<Sample>();
     
-    public int sampleNumber;
+    public int iDnum;
     public String sampleName;
     public String sourceName;
     public String sourceLabware;
@@ -34,7 +34,7 @@ public class IO {
             while (s.hasNextLine()) {
             	//Split string into pre-defined components
             	line = s.nextLine().split(",");
-            	sampleNumber = Integer.parseInt(line[0]);
+            	iDnum = Integer.parseInt(line[0]);
                 sampleName = line[1];         
                 sourceName = line[2];         
                 sourceLabware = line[3];      
@@ -48,9 +48,15 @@ public class IO {
                 includeInAssay = Boolean.parseBoolean(line[12]);
                 
                 //Create new sample with required components and add to the sample list
-                newSample = new Sample(sampleName, targetDilution);
-                sampleList.add(newSample);
+                //newSample = new Sample(sampleName, targetDilution);
+                //sampleList.add(newSample);
                 
+                //create complete sample with all details
+                newSample = new Sample(iDnum, sampleName, sourceName,
+                		sourceLabware, sampleType, sourceWellNumber,
+                		targetDilution, numberOfSerialDilutions,
+                		serialDilutionFactor, dilutionReplicates,
+                		assayReplicates, includeInAssay);
             	for (int i = 0; i < line.length; i++) {
                 	System.out.print(line[i] + ", ");
                 }

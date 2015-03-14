@@ -52,7 +52,7 @@ public class Main {
 		IO runIO = new IO();
 		ArrayList<Sample> importedSamples = runIO.openFile("example_input.csv");
 		
-		RunController testRun = new RunController(testPrepPlate, testTargetPlate, testSourcePlates, testSamples);
+		RunController testRun = new RunController(testPrepPlate, testTargetPlate, testSamples);
 		System.out.println("Test script completed?");
 	}
 

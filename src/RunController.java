@@ -3,15 +3,21 @@ import java.util.ArrayList;
 public class RunController {
 
 	private ArrayList<Sample> samples;
-	private Plate prepPlate;
-	private Plate targetPlate;
-	private Plate[] sourcePlates;
-	private Sample currentSample;
 	
-	public RunController(Plate prepPlateType, Plate targetPlateType,
-			Plate[] sourcePlates, ArrayList<Sample> samples) {
-		this.prepPlate = prepPlateType;
-		this.targetPlate = targetPlateType;
+	private Plate prepPlateType;
+	private Plate targetPlateType;
+	private Plate sourcePlateType;
+	
+	private ArrayList<Plate> prepPlates;
+	private Plate targetPlate;
+	private ArrayList<Plate> sourcePlates;
+	
+	private Sample currentSample;
+	private boolean plateFound;
+	
+	public RunController(Plate prepPlateType, Plate targetPlateType, ArrayList<Sample> samples) {
+		this.prepPlateType = prepPlateType;
+		this.targetPlateType = targetPlateType;
 		this.samples = samples;
 
 		for (int s = 0; s < samples.size(); s++) {
@@ -27,11 +33,11 @@ public class RunController {
 		}
 	}
 	public Plate getPrepPlateType() {
-		return this.prepPlate;
+		return this.prepPlateType;
 	}
 	
 	public Plate getTargetPlateType() {
-		return this.targetPlate;
+		return this.targetPlateType;
 	}
 	
 	/**
@@ -56,14 +62,14 @@ public class RunController {
 		while ((targetPlate.getMaxDil() * currentDilution) < targetDilutionFactor) {
 			
 			// The sample volume is the required volume to get the target dilution, or the minimum aspiration volume
-			nextSampleVol = Math.max(prepPlate.getMinAspVol(), (currentDilution/targetDilutionFactor)*prepPlate.getWellVol());
+			nextSampleVol = Math.max(prepPlateType.getMinAspVol(), (currentDilution/targetDilutionFactor)*prepPlateType.getWellVol());
 			
 			// Update current dilution value
-			currentDilution = currentDilution * ( 1.0 / (nextSampleVol / prepPlate.getWellVol()));
+			currentDilution = currentDilution * ( 1.0 / (nextSampleVol / prepPlateType.getWellVol()));
 			
 			// Add new dilution to prepDilutions array List
 			Dilution newPrepDilution = new Dilution(nextSampleVol, 
-					prepPlate.getWellVol() - nextSampleVol, currentDilution);
+					prepPlateType.getWellVol() - nextSampleVol, currentDilution);
 			sample.getPrepDilutions().add(newPrepDilution);
 			
 			//System.out.println(newPrepDilution.getDetails());
@@ -92,6 +98,19 @@ public class RunController {
 		ArrayList<Dilution> pd;
 		for (int i = 0 ; i < samples.size(); i ++) {
 			Sample s = samples.get(i);
+			//Check if the source plate already exists otherwise create it
+			plateFound = false;
+			for (int j = 0; j < sourcePlates.size(); j++) {
+				if (s.getSourceName() == sourcePlates.get(j).getName() & 
+						s.getSourceLabware() == sourcePlates.get(j).getLabware()) {
+					plateFound = true;
+				}
+			}
+			if (plateFound == true) {
+				//FIX ME! need to contrust the new plat, but don't have the plate dimensions
+				//search for "96" in labware name or create a list of labware somewhere..
+				//sourcePlates.add(new Plate())
+			}
 			pd = s.getPrepDilutions();
 			//Assign source well to the source well of the first prep or target dilution.
 			if (pd.size() > 0) {
@@ -103,6 +122,9 @@ public class RunController {
 			for (int j = 0 ; j < pd.size(); j++) {
 				
 			}
+			
 		}
+		// check if there are duplicate source plates with identical names but different labware
+		
 	}
 }

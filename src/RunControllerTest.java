@@ -40,7 +40,7 @@ public class RunControllerTest {
 		testSamples.add(sample3);
 		testSamples.add(sample4);
 		
-		RunController testRun = new RunController(testPrepPlate, testTargetPlate, testSourcePlates, testSamples);
+		RunController testRun = new RunController(testPrepPlate, testTargetPlate, testSamples);
 		// Define expected volumes for the given samples
 		double[][][] expectedVols = new double[][][] {
 				{{20,380},{20,380},{26.666,373.333},{180,0}},

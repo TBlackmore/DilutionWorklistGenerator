@@ -13,19 +13,40 @@ public class Plate {
 	private String plateName;
 	private Dilution[][] dils;
 	
-	//Constructors
-	public Plate(int rows, int cols, String plateType, double wellVol, double minAspVol) {
-		this.rows = rows;
-		this.cols = cols;
+	//Base constructors (defaults to 96 well plate)
+	public Plate(String name, String plateType, double wellVol, double minAspVol) {
+		this.rows = 8;
+		this.cols = 12;
+		this.name = name;
 		this.wellVol = wellVol;
 		this.minAspVol = minAspVol;
 		this.plateType = plateType;
 		this.dils = new Dilution[rows][cols];
 		
-		for (int r = 0 ; r < rows ; r++) {
-			for (int c = 0 ; c < cols ; c++) {
-			}
-		}
+//		for (int r = 0 ; r < rows ; r++) {
+//			for (int c = 0 ; c < cols ; c++) {
+//			}
+//		}
+	}
+	//Constructor with custom rows/cols
+	public Plate(int rows, int cols, String name, String plateType, double wellVol, double minAspVol) {
+		this(name, plateType, wellVol, minAspVol);
+		this.rows = rows;
+		this.cols = cols;
+		//overwrite Dilution array with new dimensions
+		this.dils = new Dilution[rows][cols];
+	}
+	
+	public int wellCol (int wellNumber) {
+		return 1 + ((wellNumber - 1) % cols);
+	}
+	
+	public int wellRow (int wellNumber) {
+		return 1 + ((wellNumber - 1) / cols);
+	}
+	
+	public void setDilution(Dilution dilution, int wellNumber) {
+		this.dils[wellRow(wellNumber)][wellCol(wellNumber)] = dilution;
 	}
 	
 	public String getName() {

@@ -31,7 +31,7 @@ public class Sample {
 		//this.sampleList = sampleList;
 		this.prepDilutions = new ArrayList<Dilution>();
 		//System.out.println(currentSource);
-		
+		this.source = new Dilution(1.0);
 	}
 	
 	/**
@@ -68,6 +68,7 @@ public class Sample {
 		this.includeInAssay = includeInAssay;
 		
 		this.prepDilutions = new ArrayList<Dilution>();
+		this.source = new Dilution(1.0);
 	}
 	
 	public ArrayList<Dilution> getPrepDilutions() {

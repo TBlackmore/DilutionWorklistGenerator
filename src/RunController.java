@@ -10,21 +10,24 @@ public class RunController {
 	
 	private ArrayList<Plate> prepPlates;
 	private Plate targetPlate;
-	private ArrayList<Plate> sourcePlates;
+	private ArrayList<Plate> sourcePlates = new ArrayList<Plate>();
 	
 	private Sample currentSample;
+	private Sample newSourceDilution;
+	private Plate currentSourcePlate;
 	private boolean plateFound;
 	
 	public RunController(Plate prepPlateType, Plate targetPlateType, ArrayList<Sample> samples) {
 		this.prepPlateType = prepPlateType;
 		this.targetPlateType = targetPlateType;
+		this.targetPlate = targetPlateType;
 		this.samples = samples;
 
 		for (int s = 0; s < samples.size(); s++) {
 			currentSample = samples.get(s);
 			generateDilutions(currentSample);
 		}
-		
+		setSampleSources(samples);
 		arrangeDilutions(samples);
 		//Print out the sample info for each sample
 		for (int s = 0; s < samples.size(); s++) {
@@ -41,6 +44,48 @@ public class RunController {
 	}
 	
 	/**
+	 * Assign the source well to each sample dilution
+	 *
+	 * FIXME: Assumes all source plates are 96 well plates, with fixed vols and min asps
+	 * 
+	 * @param sampleList
+	 */
+	public void setSampleSources(ArrayList<Sample> samples) {
+		
+		//ArrayList<Dilution> pd;
+		for (int i = 0 ; i < samples.size(); i ++) {
+			Sample s = samples.get(i);
+			//Check if the source plate already exists otherwise create it
+			plateFound = false;
+			for (int j = 0; j < sourcePlates.size(); j++) {
+				if (s.getSourceName() == sourcePlates.get(j).getName() & 
+						s.getSourceLabware() == sourcePlates.get(j).getLabware()) {
+					plateFound = true;
+					currentSourcePlate = sourcePlates.get(j);
+				}
+			}
+			if (plateFound == false) {
+				//FIXME all source plates are 96 wells of 150 uL and minAsp of 20, need to be able to define these values
+				sourcePlates.add(new Plate(s.getSourceName(), s.getSourceLabware(), 150, 20));
+				currentSourcePlate = sourcePlates.get(sourcePlates.size() - 1);
+			}
+			//Set the samples source dilution to the source position
+			currentSourcePlate.setDilution(s.getSource(), s.getSourceWellNumber());
+			
+			//pd = s.getPrepDilutions();
+		}
+		// check if there are duplicate source plates with identical names but different labware
+		for (int i = 0; i < sourcePlates.size(); i++) {
+			for (int j = i + 1; j < sourcePlates.size(); j++) {
+				if (sourcePlates.get(i).getName().equals(sourcePlates.get(j).getName()) & 
+						sourcePlates.get(i).getLabware().equals(sourcePlates.get(j).getLabware())) {
+					System.out.println("ERROR: Multiple source plates with match name and labware detected");
+				}
+			}
+		}
+	}
+	
+	/**
 	 * Check if the target dilution can be reached.
 	 * If the target dilution cannot be reached create prep dilution(s)
 	 * Then creates the target dilution
@@ -53,6 +98,8 @@ public class RunController {
 	public Sample generateDilutions (Sample sample) {
 		
 		//tests
+		boolean sampleSourceAssigned;
+		sampleSourceAssigned = false;
 		double nextSampleVol;
 		double targetDilutionFactor = sample.getTargetDilutionFactor();
 		double currentDilution = 1;
@@ -67,11 +114,14 @@ public class RunController {
 			// Update current dilution value
 			currentDilution = currentDilution * ( 1.0 / (nextSampleVol / prepPlateType.getWellVol()));
 			
-			// Add new dilution to prepDilutions array List
+			// Create new dilution, 
 			Dilution newPrepDilution = new Dilution(nextSampleVol, 
 					prepPlateType.getWellVol() - nextSampleVol, currentDilution);
-			sample.getPrepDilutions().add(newPrepDilution);
+			// Assign source well
+			assignSource(sampleSourceAssigned, newPrepDilution, sample);
 			
+			// add to prepDilutions array List
+			sample.getPrepDilutions().add(newPrepDilution);
 			//System.out.println(newPrepDilution.getDetails());
 		}
 		// create the final dilution into the target plate
@@ -81,50 +131,38 @@ public class RunController {
 		double targetSampleVol = targetPlate.getWellVol() / targetDilStep;
 		currentDilution = currentDilution * targetDilStep;
 		targetDilution = new Dilution(targetSampleVol, targetPlate.getWellVol() - targetSampleVol, currentDilution);
+		assignSource(sampleSourceAssigned, targetDilution, sample);
+
 		sample.setTargetDilution(targetDilution);
+
 		//System.out.println("Added target dilution for sample: " + sample.getName() + " currentDilution = " + currentDilution);
 		//System.out.println(targetDilution.getDetails());
 		//System.out.println("sample dilutions generated");
 		return sample;
 	}
+	
 	/**
-	 * Assign the source well to each sample dilution
-	 * iterate through every dilution of every sample and assign both a source and destination well
-	 * this arrangement dilutes samples across a plate, until the transfer step is reached
-	 * @param sampleList
+	 * Assigns the source of the dilution to another dilution object and substracts the required volume
+	 * from the source dilution's currentvolume
+	 * 
+	 * @param sampleSourceAssigned
+	 * @param dilution
+	 * @param sample
 	 */
+	public void assignSource(Boolean sampleSourceAssigned, Dilution dilution, Sample sample) {
+		if (sampleSourceAssigned == false) {
+			dilution.setSource(sample.getSource());
+			sampleSourceAssigned = true;
+		} else {
+			dilution.setSource(sample.getPrepDilutions().get(sample.getPrepDilutions().size() - 1));
+		}
+		dilution.getSource().subtractVol(dilution.getSampleVol());
+	}
+	
+	
 	public void arrangeDilutions(ArrayList<Sample> samples) {
 		
-		ArrayList<Dilution> pd;
-		for (int i = 0 ; i < samples.size(); i ++) {
-			Sample s = samples.get(i);
-			//Check if the source plate already exists otherwise create it
-			plateFound = false;
-			for (int j = 0; j < sourcePlates.size(); j++) {
-				if (s.getSourceName() == sourcePlates.get(j).getName() & 
-						s.getSourceLabware() == sourcePlates.get(j).getLabware()) {
-					plateFound = true;
-				}
-			}
-			if (plateFound == true) {
-				//FIX ME! need to contrust the new plat, but don't have the plate dimensions
-				//search for "96" in labware name or create a list of labware somewhere..
-				//sourcePlates.add(new Plate())
-			}
-			pd = s.getPrepDilutions();
-			//Assign source well to the source well of the first prep or target dilution.
-			if (pd.size() > 0) {
-				
-			} else {
-				
-			}
-			
-			for (int j = 0 ; j < pd.size(); j++) {
-				
-			}
-			
-		}
-		// check if there are duplicate source plates with identical names but different labware
 		
 	}
+	
 }

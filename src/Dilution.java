@@ -5,12 +5,18 @@ public class Dilution {
 	private double stepDilutionFactor;
 	private double totalDilutionFactor;
 	private double remainingVol;
+	private Dilution source;
+	
+	
+	public Dilution(double totalDilutionFactor) {
+		this.totalDilutionFactor = totalDilutionFactor;
+	}
 	
 	public Dilution(double sampleVol, double bufferVol, double totalDilutionFactor) {
+		this(totalDilutionFactor);
 		this.sampleVol = sampleVol;
 		this.bufferVol = bufferVol;
 		this.stepDilutionFactor = (1/(sampleVol/(sampleVol + bufferVol)));
-		this.totalDilutionFactor = totalDilutionFactor;
 		this.remainingVol = sampleVol + bufferVol;
 	}
 	
@@ -30,5 +36,12 @@ public class Dilution {
 	
 	public double getBufferVol() {
 		return bufferVol;
+	}
+	
+	public Dilution getSource() {
+		return this.source;
+	}
+	public void setSource(Dilution source) {
+		this.source = source;
 	}
 }

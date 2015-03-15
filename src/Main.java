@@ -13,29 +13,23 @@ public class Main {
 		return 1 / (sampleVol / (sampleVol + bufferVol));
 	}
 	
-	public static int wellCol (int wellNumber, Plate plate) {
-		return 1 + ((wellNumber - 1) % plate.getColumnSize());
-	}
 	
-	public static int wellRow (int wellNumber, Plate plate) {
-		return 1 + ((wellNumber - 1) / plate.getColumnSize());
-	}
 	public static void main(String[] args) {
 
 		//all of this information needs to be provided from the form/gui
 		
 		//source plate
-		Plate testSourcePlate = new Plate(8,16,"Short matrix", 120, 20);
+		Plate testSourcePlate = new Plate(8,16,"testSource","Short matrix", 120, 20);
 		//source plate array
 		Plate[] testSourcePlates = new Plate[1];
 		testSourcePlates[0] = testSourcePlate;
 		
 		
 		//The type of prep plate to be used
-		Plate testPrepPlate = new Plate(8,16,"500uL masterblock", 400, 20);
+		Plate testPrepPlate = new Plate(8,16,"testPrep","500uL masterblock", 400, 20);
 		
 		//the type of target plate to be used
-		Plate testTargetPlate = new Plate(16,32,"200 uL masterblock", 180, 20);
+		Plate testTargetPlate = new Plate(16,32,"testTarget","200 uL masterblock", 180, 20);
 		
 		//testSamples
 		Sample sample1 = new Sample("sample1",6000);

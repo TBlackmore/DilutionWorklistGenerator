@@ -45,6 +45,15 @@ public class Plate {
 		return 1 + ((wellNumber - 1) / cols);
 	}
 	
+	public int totalWells () {
+		return rows * cols;
+	}
+	
+	public Dilution getDilution(int wellNumber) {
+		System.out.println("getDilution " + wellNumber + " = " + (wellRow(wellNumber) - 1) + "," + (wellCol(wellNumber) - 1));
+		return this.dils[wellRow(wellNumber) - 1][wellCol(wellNumber) - 1];
+	}
+	
 	public void setDilution(Dilution dilution, int wellNumber) {
 		this.dils[wellRow(wellNumber)][wellCol(wellNumber)] = dilution;
 	}

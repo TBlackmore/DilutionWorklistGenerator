@@ -8,7 +8,7 @@ public class RunController {
 	private Plate targetPlateType;
 	private Plate sourcePlateType;
 	
-	private ArrayList<Plate> prepPlates;
+	private ArrayList<Plate> prepPlates = new ArrayList<Plate>();
 	private Plate targetPlate;
 	private ArrayList<Plate> sourcePlates = new ArrayList<Plate>();
 	
@@ -28,7 +28,7 @@ public class RunController {
 			generateDilutions(currentSample);
 		}
 		setSampleSources(samples);
-		arrangeDilutions(samples);
+		arrangePrepDilutions(samples);
 		//Print out the sample info for each sample
 		for (int s = 0; s < samples.size(); s++) {
 			currentSample = samples.get(s);
@@ -145,6 +145,8 @@ public class RunController {
 	 * Assigns the source of the dilution to another dilution object and substracts the required volume
 	 * from the source dilution's currentvolume
 	 * 
+	 * FIXME: Should also check if the required volume for the dilution is available (although difficult for sample source)
+	 * 
 	 * @param sampleSourceAssigned
 	 * @param dilution
 	 * @param sample
@@ -159,9 +161,40 @@ public class RunController {
 		dilution.getSource().subtractVol(dilution.getSampleVol());
 	}
 	
-	
-	public void arrangeDilutions(ArrayList<Sample> samples) {
-		
+	/**
+	 * Arrange the prep dilutions, left to right on the prep plates
+	 * FIXME: doesn't assign dilutions in the first row or column
+	 * @param samples
+	 */
+	public void arrangePrepDilutions(ArrayList<Sample> samples) {
+		Sample s;
+		ArrayList<Dilution> pd;
+		int nextWell = 1;
+		int recallWell;
+		//create a prep plate
+		int nextPlate = 1;
+		prepPlates.add(new Plate(prepPlateType.getRowSize(), prepPlateType.getColumnSize(), 
+				prepPlateType.getName() + nextPlate, prepPlateType.getLabware(),
+				prepPlateType.getWellVol(), prepPlateType.getMinAspVol()));
+		//loop through each sample in the sample list
+		for (int i = 0; i < samples.size(); i++) {
+			s = samples.get(i);
+			pd = s.getPrepDilutions();
+			//if the next well in the plate already has a dilution then skip to the next empty well
+			//could this lead to samples being spread over multiple rows?
+			while (prepPlates.get(nextWell/prepPlateType.totalWells()).getDilution(nextWell) != null) {
+				nextWell++;
+			}
+			recallWell = nextWell;
+			//loop through each prep dilution in sample
+			for (int j = 0; j < pd.size(); j++) {
+				System.out.println("nextWell = " + nextWell);
+				prepPlates.get(nextWell/prepPlateType.totalWells()).setDilution(pd.get(j), nextWell);
+				//move to the well to the right
+				nextWell = nextWell + prepPlateType.getColumnSize();
+			}
+			nextWell = recallWell + 1;
+		}
 		
 	}
 	

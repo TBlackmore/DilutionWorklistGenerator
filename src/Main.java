@@ -16,8 +16,8 @@ public class Main {
 	
 	public static void main(String[] args) {
 
+		System.out.println("383/384 = " + (383/384));
 		//all of this information needs to be provided from the form/gui
-		
 		//source plate
 		Plate testSourcePlate = new Plate(8,16,"testSource","Short matrix", 120, 20);
 		//source plate array
@@ -26,7 +26,7 @@ public class Main {
 		
 		
 		//The type of prep plate to be used
-		Plate testPrepPlate = new Plate(8,16,"testPrep","500uL masterblock", 400, 20);
+		Plate testPrepPlate = new Plate(8,12,"testPrep","500uL masterblock", 400, 20);
 		
 		//the type of target plate to be used
 		Plate testTargetPlate = new Plate(16,32,"testTarget","200 uL masterblock", 180, 20);

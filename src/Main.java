@@ -16,7 +16,6 @@ public class Main {
 	
 	public static void main(String[] args) {
 
-		System.out.println("383/384 = " + (383/384));
 		//all of this information needs to be provided from the form/gui
 		//source plate
 		Plate testSourcePlate = new Plate(8,16,"testSource","Short matrix", 120, 20);
@@ -27,15 +26,20 @@ public class Main {
 		
 		//The type of prep plate to be used
 		Plate testPrepPlate = new Plate(8,12,"testPrep","500uL masterblock", 400, 20);
+		System.out.println("testPrepPlate.wellCol(9) " + testPrepPlate.wellCol(9) + ", testPrepPlate.wellRow(9) " + testPrepPlate.wellRow(9));
 		
 		//the type of target plate to be used
 		Plate testTargetPlate = new Plate(16,32,"testTarget","200 uL masterblock", 180, 20);
 		
 		//testSamples
-		Sample sample1 = new Sample("sample1",6000);
-		Sample sample2 = new Sample("sample2",10); //Can't reach target dil during transfer on first step
-		Sample sample3 = new Sample("sample3",9);  //First step is target dil during transfer
-		Sample sample4 = new Sample("sample4",1);  // No dilution, to be run neat
+		//multiple dilution steps required
+		Sample sample1 = new Sample(1,"sample1",testSourcePlate.getName(),testSourcePlate.getLabware(),"sample",1,6000,2,1.5,2,2,true);
+		//Can't reach target dil during transfer on first step
+		Sample sample2 = new Sample(1,"sample2",testSourcePlate.getName(),testSourcePlate.getLabware(),"sample",1,10  ,2,1.5,2,2,true); 
+		//First step is target dil during transfer
+		Sample sample3 = new Sample(1,"sample3",testSourcePlate.getName(),testSourcePlate.getLabware(),"sample",1,9   ,2,1.5,2,2,true);  
+		// No dilution, to be run neat
+		Sample sample4 = new Sample(1,"sample4",testSourcePlate.getName(),testSourcePlate.getLabware(),"sample",1,1   ,2,1.5,2,2,true);  
 		
 		ArrayList<Sample> testSamples = new ArrayList<Sample>();
 		testSamples.add(sample1);

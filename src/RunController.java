@@ -191,7 +191,7 @@ public class RunController {
 				System.out.println("nextWell = " + nextWell);
 				prepPlates.get(nextWell/prepPlateType.totalWells()).setDilution(pd.get(j), nextWell);
 				//move to the well to the right
-				nextWell = nextWell + prepPlateType.getColumnSize();
+				nextWell = nextWell + prepPlateType.getRowSize();
 			}
 			nextWell = recallWell + 1;
 		}

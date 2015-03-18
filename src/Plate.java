@@ -38,11 +38,14 @@ public class Plate {
 	}
 	
 	public int wellCol (int wellNumber) {
-		return 1 + ((wellNumber - 1) % cols);
+		System.out.println("wellCol(" + wellNumber + ") = " + (wellNumber - 1) / rows);
+		return (wellNumber - 1) / rows;
+		//return ((wellNumber - 1) / cols);
 	}
 	
 	public int wellRow (int wellNumber) {
-		return 1 + ((wellNumber - 1) / cols);
+		System.out.println("wellRow(" + wellNumber + ") = " + ((wellNumber - 1) % rows));
+		return ((wellNumber - 1) % rows);
 	}
 	
 	public int totalWells () {
@@ -50,11 +53,12 @@ public class Plate {
 	}
 	
 	public Dilution getDilution(int wellNumber) {
-		System.out.println("getDilution " + wellNumber + " = " + (wellRow(wellNumber) - 1) + "," + (wellCol(wellNumber) - 1));
-		return this.dils[wellRow(wellNumber) - 1][wellCol(wellNumber) - 1];
+		System.out.println("getDilution " + wellNumber + " = " + wellRow(wellNumber) + "," + wellCol(wellNumber));
+		return this.dils[wellRow(wellNumber)][wellCol(wellNumber)];
 	}
 	
 	public void setDilution(Dilution dilution, int wellNumber) {
+		System.out.println("setDilution " + wellNumber + " = " + wellRow(wellNumber) + "," + wellCol(wellNumber));
 		this.dils[wellRow(wellNumber)][wellCol(wellNumber)] = dilution;
 	}
 	

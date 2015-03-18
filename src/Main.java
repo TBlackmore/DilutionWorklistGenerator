@@ -25,7 +25,7 @@ public class Main {
 		
 		
 		//The type of prep plate to be used
-		Plate testPrepPlate = new Plate(8,12,"testPrep","500uL masterblock", 400, 20);
+		Plate testPrepPlate = new Plate(8,12,"testPrep","500uL masterblock", 200, 80);
 		System.out.println("testPrepPlate.wellCol(9) " + testPrepPlate.wellCol(9) + ", testPrepPlate.wellRow(9) " + testPrepPlate.wellRow(9));
 		
 		//the type of target plate to be used
@@ -33,7 +33,7 @@ public class Main {
 		
 		//testSamples
 		//multiple dilution steps required
-		Sample sample1 = new Sample(1,"sample1",testSourcePlate.getName(),testSourcePlate.getLabware(),"sample",1,6000,2,1.5,2,2,true);
+		Sample sample1 = new Sample(1,"sample1",testSourcePlate.getName(),testSourcePlate.getLabware(),"sample",1,60000000,2,1.5,2,2,true);
 		//Can't reach target dil during transfer on first step
 		Sample sample2 = new Sample(1,"sample2",testSourcePlate.getName(),testSourcePlate.getLabware(),"sample",1,10  ,2,1.5,2,2,true); 
 		//First step is target dil during transfer

@@ -26,13 +26,14 @@ public class RunControllerTest {
 		
 		
 		// Can't reach target dil during transfer
-		Sample sample1 = new Sample("sample1",6000); 
-		// Can't reach target dil during transfer on first step
-		Sample sample2 = new Sample("sample2",10);
-		// First step is target dil during transfer
-		Sample sample3 = new Sample("sample3",9); 
+		//multiple dilution steps required
+		Sample sample1 = new Sample(1,"sample1",testSourcePlate.getName(),testSourcePlate.getLabware(),"sample",1,6000,2,1.5,2,2,true);
+		//Can't reach target dil during transfer on first step
+		Sample sample2 = new Sample(1,"sample2",testSourcePlate.getName(),testSourcePlate.getLabware(),"sample",1,10  ,2,1.5,2,2,true); 
+		//First step is target dil during transfer
+		Sample sample3 = new Sample(1,"sample3",testSourcePlate.getName(),testSourcePlate.getLabware(),"sample",1,9   ,2,1.5,2,2,true);  
 		// No dilution, to be run neat
-		Sample sample4 = new Sample("sample4",1); 
+		Sample sample4 = new Sample(1,"sample4",testSourcePlate.getName(),testSourcePlate.getLabware(),"sample",1,1   ,2,1.5,2,2,true);  
 		
 		ArrayList<Sample> testSamples = new ArrayList<Sample>();
 		testSamples.add(sample1);
@@ -63,7 +64,30 @@ public class RunControllerTest {
 			//System.out.println("Target Buffer " + expectedVols[s][expectedVols[s].length - 1][1] + " " + testSamples.get(s).getTargetDilution().getBufferVol());
 			assertEquals(expectedVols[s][expectedVols[s].length - 1][1], testSamples.get(s).getTargetDilution().getBufferVol(), 0.001);
 		}
-		System.out.println("Breakpoint");
+		
+	}
+	
+	// Testing for sample that has more dilutions than can be arranged across a plate
+	@Test
+	public void testArrangePrepDilutions() {
+		//Big prep plate, little target plate, little source plate
+				//source plate
+				Plate testSourcePlate = new Plate(8,16,"testSource","Short matrix", 120, 20);
+				
+				//Prep plate only allows for small dilution steps
+				Plate testPrepPlate = new Plate(8,12,"testPrep","500uL masterblock", 400, 20);
+				
+				//the type of target plate to be used
+				Plate testTargetPlate = new Plate(16,32,"testTarget","200 uL masterblock", 180, 20);
+				
+				// Can't reach target dil during transfer
+				Sample sample1 = new Sample(1,"sample1",testSourcePlate.getName(),testSourcePlate.getLabware(),"sample",1,60000000,2,1.5,2,2,true);
+				
+				ArrayList<Sample> testSamples = new ArrayList<Sample>();
+				testSamples.add(sample1);
+				
+				RunController testRun = new RunController(testPrepPlate, testTargetPlate, testSamples);
+				assertTrue(false);
 	}
 
 }

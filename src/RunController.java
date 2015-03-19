@@ -46,7 +46,8 @@ public class RunController {
 	/**
 	 * Assign the source well to each sample dilution
 	 *
-	 * FIXME: Assumes all source plates are 96 well plates, with fixed vols and min asps
+	 * FIXME: Creates a new source plate for every sample
+	 * Assumes all source plates are 96 well plates, with fixed vols and min asps
 	 * 
 	 * @param sampleList
 	 */
@@ -58,8 +59,10 @@ public class RunController {
 			//Check if the source plate already exists otherwise create it
 			plateFound = false;
 			for (int j = 0; j < sourcePlates.size(); j++) {
-				if (s.getSourceName() == sourcePlates.get(j).getName() & 
-						s.getSourceLabware() == sourcePlates.get(j).getLabware()) {
+				System.out.println("Compare names: " + s.getSourceName()    + ", " + sourcePlates.get(j).getName()   );
+				System.out.println("Compare labwares: " + s.getSourceLabware() + ", " + sourcePlates.get(j).getLabware());
+				if (s.getSourceName().equals(sourcePlates.get(j).getName()) & 
+						s.getSourceLabware().equals(sourcePlates.get(j).getLabware())) {
 					plateFound = true;
 					currentSourcePlate = sourcePlates.get(j);
 				}
@@ -162,8 +165,8 @@ public class RunController {
 	}
 	
 	/**
-	 * Arrange the prep dilutions, left to right on the prep plates
-	 * FIXME: doesn't assign dilutions in the first row or column
+	 * Creates preplates, arranges the prep dilutions, going left to right on the prep plates
+	 * 
 	 * @param samples
 	 */
 	public void arrangePrepDilutions(ArrayList<Sample> samples) {
@@ -173,9 +176,8 @@ public class RunController {
 		int recallWell;
 		//create a prep plate
 		int nextPlate = 1;
-		prepPlates.add(new Plate(prepPlateType.getRowSize(), prepPlateType.getColumnSize(), 
-				prepPlateType.getName() + nextPlate, prepPlateType.getLabware(),
-				prepPlateType.getWellVol(), prepPlateType.getMinAspVol()));
+		prepPlates.add(new Plate(prepPlateType, prepPlateType.getName() + nextPlate));
+		int totalWells = prepPlates.get(0).totalWells();
 		//loop through each sample in the sample list
 		for (int i = 0; i < samples.size(); i++) {
 			s = samples.get(i);
@@ -188,10 +190,16 @@ public class RunController {
 			recallWell = nextWell;
 			//loop through each prep dilution in sample
 			for (int j = 0; j < pd.size(); j++) {
+				//if the nextWell is on the next plate add a new plate
+				if ((nextWell - ((nextPlate - 1) * prepPlateType.totalWells())) > totalWells) {
+					nextPlate++;
+					prepPlates.add(new Plate(prepPlateType, prepPlateType.getName() + nextPlate));
+				}
 				System.out.println("nextWell = " + nextWell);
-				prepPlates.get(nextWell/prepPlateType.totalWells()).setDilution(pd.get(j), nextWell);
+				//assign the dilution to the plate
+				prepPlates.get(nextWell/prepPlateType.totalWells()).setDilution(pd.get(j), nextWell % prepPlateType.totalWells());
 				//move to the well to the right
-				nextWell = nextWell + prepPlateType.getRowSize();
+				nextWell = nextWell + prepPlateType.getRows();
 			}
 			nextWell = recallWell + 1;
 		}

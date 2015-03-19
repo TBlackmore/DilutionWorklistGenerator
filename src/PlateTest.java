@@ -24,14 +24,23 @@ public class PlateTest{
 	
 	@Test
 	public void test() {
-		assertTrue(testPrepPlate.wellRow(1) == 1);
-		assertTrue(testPrepPlate.wellCol(1) == 1);
-		assertTrue(testPrepPlate.wellRow(96) == 8);
-		assertTrue(testPrepPlate.wellCol(96) == 12);
-		assertTrue(testTargetPlate.wellRow(1) == 1);
-		assertTrue(testTargetPlate.wellCol(1) == 1);
-		assertTrue(testTargetPlate.wellRow(384) == 16);
-		assertTrue(testTargetPlate.wellCol(384) == 24);
+		assertTrue(testPrepPlate.wellRow  (1  ) == 0 );
+		assertTrue(testPrepPlate.wellCol  (1  ) == 0 );
+		assertTrue(testPrepPlate.wellRow  (96 ) == 7 );
+		assertTrue(testPrepPlate.wellCol  (96 ) == 11);
+		assertTrue(testPrepPlate.wellRow  (2  ) == 1 );
+		assertTrue(testPrepPlate.wellCol  (2  ) == 0 );
+		assertTrue(testPrepPlate.wellRow  (9  ) == 0 );
+		assertTrue(testPrepPlate.wellCol  (9  ) == 1 );
+		
+		assertTrue(testTargetPlate.wellRow(1  ) == 0 );
+		assertTrue(testTargetPlate.wellCol(1  ) == 0 );
+		assertTrue(testTargetPlate.wellRow(2  ) == 1 );
+		assertTrue(testTargetPlate.wellCol(2  ) == 0 );
+		assertTrue(testTargetPlate.wellRow(17 ) == 0 );
+		assertTrue(testTargetPlate.wellCol(17 ) == 1 );
+		assertTrue(testTargetPlate.wellRow(384) == 15);
+		assertTrue(testTargetPlate.wellCol(384) == 23);
 	}
 
 }

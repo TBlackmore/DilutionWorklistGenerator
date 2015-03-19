@@ -28,7 +28,8 @@ public class IO {
     }
     
     public ArrayList<Sample> openFile(String filename) {
-        try {
+         
+    	try {
             s = new Scanner(new BufferedReader(new FileReader(filename)));
             System.out.println(s.nextLine());
             while (s.hasNextLine()) {
@@ -57,7 +58,8 @@ public class IO {
                 		targetDilution, numberOfSerialDilutions,
                 		serialDilutionFactor, dilutionReplicates,
                 		assayReplicates, includeInAssay);
-            	for (int i = 0; i < line.length; i++) {
+            	sampleList.add(newSample);
+                for (int i = 0; i < line.length; i++) {
                 	System.out.print(line[i] + ", ");
                 }
             	

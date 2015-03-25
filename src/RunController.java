@@ -17,6 +17,8 @@ public class RunController {
 	private Plate currentSourcePlate;
 	private boolean plateFound;
 	
+	
+	
 	public RunController(Plate prepPlateType, Plate targetPlateType, ArrayList<Sample> samples) {
 		this.prepPlateType = prepPlateType;
 		this.targetPlateType = targetPlateType;
@@ -41,6 +43,28 @@ public class RunController {
 	
 	public Plate getTargetPlateType() {
 		return this.targetPlateType;
+	}
+	
+	//variables that need to be configurable but aren't yet
+	private String diluentName = "Diluent";
+	private String diluentLabware = "Trough 100ml";
+	/**
+	 * Generate the dilution commands for a dilution
+	 * @param Dilution
+	 * @return
+	 */
+	private int diluentAspPos = 1;
+	public String dilutionCommands (Dilution d) {
+		String aspDil;
+		String aspSample;
+		String dispense;
+		
+		aspDil = "A;" + diluentName + ";;" + diluentLabware + ";" + diluentAspPos + 1;
+		diluentAspPos = (diluentAspPos + 1) % 8;
+		aspSample = "A;";
+		dispense = "D;";
+		
+		return (aspDil + "\n" + aspSample + "\n" + dispense + "\n");
 	}
 	
 	/**

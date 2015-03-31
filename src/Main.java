@@ -50,7 +50,11 @@ public class Main {
 		IO runIO = new IO();
 		ArrayList<Sample> importedSamples = runIO.openFile("example_input.csv");
 		
+<<<<<<< HEAD
 		RunController testRun = new RunController(testPrepPlate, testTargetPlate, importedSamples);
+=======
+		RunController testRun = new RunController(runIO, testPrepPlate, testTargetPlate, testSamples);
+>>>>>>> ClassCull
 		System.out.println("Test script completed?");
 	}
 

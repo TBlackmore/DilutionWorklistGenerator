@@ -66,6 +66,8 @@ public class Plate {
 	public void setDilution(Dilution dilution, int wellNumber) {
 		System.out.println("setDilution " + wellNumber + " = " + wellRow(wellNumber) + "," + wellCol(wellNumber));
 		this.dils[wellRow(wellNumber)][wellCol(wellNumber)] = dilution;
+		dilution.setPlate(this);
+		dilution.setWellNum(wellNumber);
 	}
 	
 	public String getName() {

@@ -68,27 +68,6 @@ public class RunController {
 		return this.targetPlateType;
 	}
 	
-	//variables that need to be configurable but aren't yet
-	private String diluentName = "Diluent";
-	private String diluentLabware = "Trough 100ml";
-	/**
-	 * Generate the dilution commands for a dilution
-	 * @param Dilution
-	 * @return
-	 */
-	private int diluentAspPos = 1;
-	public String dilutionCommands (Dilution d) {
-		String aspDil;
-		String aspSample;
-		String dispense;
-		
-		aspDil = "A;" + diluentName + ";;" + diluentLabware + ";" + diluentAspPos + 1;
-		diluentAspPos = (diluentAspPos + 1) % 8;
-		aspSample = "A;";
-		dispense = "D;";
-		
-		return (aspDil + "\n" + aspSample + "\n" + dispense + "\n");
-	}
 	
 	/**
 	 * Assign the source well to each sample dilution
@@ -133,6 +112,7 @@ public class RunController {
 				}
 			}
 		}
+		// FIXME check each dilution in each plate has the correct sourcePlate and wellNumber set.
 	}
 	
 	/**
@@ -231,7 +211,7 @@ public class RunController {
 			pd = s.getPrepDilutions();
 			//if the next well in the plate already has a dilution then skip to the next empty well
 			//could this lead to samples being spread over multiple rows?
-			while (prepPlates.get(nextWell/prepPlateType.totalWells()).getDilution(nextWell) != null) {
+			while (prepPlates.get((nextWell - 1)/prepPlateType.totalWells()).getDilution(1 + nextWell % prepPlateType.totalWells()) != null) {
 				nextWell++;
 			}
 			recallWell = nextWell;
@@ -243,14 +223,60 @@ public class RunController {
 					prepPlates.add(new Plate(prepPlateType, prepPlateType.getName() + nextPlate));
 				}
 				System.out.println("nextWell = " + nextWell);
-				//assign the dilution to the plate
-				prepPlates.get(nextWell/prepPlateType.totalWells()).setDilution(pd.get(j), nextWell % prepPlateType.totalWells());
+				//link the dilution to the plate and wellNumber
+				prepPlates.get((nextWell - 1)/prepPlateType.totalWells()).setDilution(pd.get(j), 1 + nextWell % prepPlateType.totalWells());
+
 				//move to the well to the right
 				nextWell = nextWell + prepPlateType.getRows();
 			}
 			nextWell = recallWell + 1;
 		}
 		
+	}
+	// FIXME
+	// variables that need to be configurable but aren't yet
+	private String diluentName = "Diluent";
+	private String diluentLabware = "Trough 100ml";
+	private double diluentUsed = 0.0;
+	private int diluentTroughVol = 90000;
+	private int diluentTroughCount;
+	private int diluentAspPos = 1;
+	/**
+	 * Get the command to aspirate diluent for the given dilution
+	 * note: aspiration position in the trough is incremented in each call for the whole run
+	 * @param d
+	 * @return
+	 */
+	public String aspDilCmd (Dilution d) {
+		String aspDil;		
+		aspDil = "A;" + diluentName + diluentTroughCount + ";;" + diluentLabware + ";" + diluentAspPos + 1 
+				+ ";;" + d.getBufferVol() + ";;;";
+		diluentAspPos = (diluentAspPos + 1) % 8;
+		diluentUsed = diluentUsed + d.getBufferVol();
+		diluentTroughCount = (int) (diluentUsed / diluentTroughVol);
+		return aspDil;
+	}
+	/**
+	 * Get the command to aspirate the source sample for the given dilution
+	 * @param d
+	 * @return
+	 */
+	public String aspSampleCmd (Dilution d) {
+		String aspSample;
+		aspSample = "A;" + d.getSource().getPlate().getName() + ";;" + d.getSource().getPlate().getLabware() 
+				+ ";" + d.getSource().getWellNum() + ";" + d.getSampleVol() + ";;;"; 
+		return aspSample;
+	}
+	/**
+	 * Get the command to dispense both the sample and buffer volume for the given dilution
+	 * @param d
+	 * @return
+	 */
+	public String dispenseBothCmd (Dilution d) {
+		String dispBoth;
+		dispBoth = "D;" + d.getPlate().getName() + ";;" + d.getPlate().getLabware()
+				+ ";" + d.getWellNum() + ";;" + d.getBufferVol() + d.getSampleVol() + ";;;";
+		return dispBoth;
 	}
 	
 }

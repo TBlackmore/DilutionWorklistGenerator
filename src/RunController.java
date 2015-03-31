@@ -1,3 +1,5 @@
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class RunController {
@@ -14,23 +16,35 @@ public class RunController {
 	
 	private Sample currentSample;
 	private boolean plateFound;
+	private IO runIO;
+	private PrintWriter out;
 	
-	public RunController(Plate prepPlateType, Plate targetPlateType, ArrayList<Sample> samples) {
+	public RunController(IO runIO, Plate prepPlateType, Plate targetPlateType, ArrayList<Sample> samples) {
 		this.prepPlateType = prepPlateType;
 		this.targetPlateType = targetPlateType;
 		this.samples = samples;
-
+		this.runIO = runIO;
 		for (int s = 0; s < samples.size(); s++) {
 			currentSample = samples.get(s);
 			generateDilutions(currentSample);
 		}
 		
 		arrangeDilutions(samples);
+		//open output stream
+		try {
+			out = runIO.openOutputStream("test.txt");
+		} catch (IOException e) {
+			System.out.println("Error opening file: " + e.getMessage());
+		}
+		//output the commands to the file
+		out.print("Hello");
 		//Print out the sample info for each sample
 		for (int s = 0; s < samples.size(); s++) {
 			currentSample = samples.get(s);
 			System.out.println(currentSample.getInfo());
 		}
+		//close the output stream
+		runIO.closeOutputStream(out);
 	}
 	public Plate getPrepPlateType() {
 		return this.prepPlateType;

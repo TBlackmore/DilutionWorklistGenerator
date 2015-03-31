@@ -25,8 +25,17 @@ public class IO {
     
     public IO () {
     	//openFile(filename);
+    	
     }
-    
+    public PrintWriter openOutputStream (String filename) throws IOException {
+    	PrintWriter out = new PrintWriter(filename);
+    	return out;
+    }
+    public void closeOutputStream(PrintWriter pw) {
+    	if (pw != null) {
+	    	pw.close();
+    	}
+    }
     public ArrayList<Sample> openFile(String filename) {
         try {
             s = new Scanner(new BufferedReader(new FileReader(filename)));

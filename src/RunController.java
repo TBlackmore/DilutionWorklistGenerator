@@ -21,13 +21,9 @@ public class RunController {
 	private IO runIO;
 	private PrintWriter out;
 	
-<<<<<<< HEAD
-	
-	
-	public RunController(Plate prepPlateType, Plate targetPlateType, ArrayList<Sample> samples) {
-=======
+
 	public RunController(IO runIO, Plate prepPlateType, Plate targetPlateType, ArrayList<Sample> samples) {
->>>>>>> ClassCull
+
 		this.prepPlateType = prepPlateType;
 		this.targetPlateType = targetPlateType;
 		this.targetPlate = targetPlateType;
@@ -37,21 +33,20 @@ public class RunController {
 			currentSample = samples.get(s);
 			generateDilutions(currentSample);
 		}
-<<<<<<< HEAD
+
 		setSampleSources(samples);
 		arrangePrepDilutions(samples);
-=======
-		
-		arrangeDilutions(samples);
+
 		//open output stream
 		try {
 			out = runIO.openOutputStream("test.txt");
+			System.out.println("test.txt opened");
 		} catch (IOException e) {
 			System.out.println("Error opening file: " + e.getMessage());
 		}
 		//output the commands to the file
 		out.print("Hello");
->>>>>>> ClassCull
+
 		//Print out the sample info for each sample
 		for (int s = 0; s < samples.size(); s++) {
 			currentSample = samples.get(s);
@@ -67,6 +62,11 @@ public class RunController {
 	public Plate getTargetPlateType() {
 		return this.targetPlateType;
 	}
+	
+	public ArrayList<Plate> getSourcePlates() {
+		return sourcePlates;
+	}
+
 	
 	
 	/**
@@ -87,6 +87,7 @@ public class RunController {
 			for (int j = 0; j < sourcePlates.size(); j++) {
 				System.out.println("Compare names: " + s.getSourceName()    + ", " + sourcePlates.get(j).getName()   );
 				System.out.println("Compare labwares: " + s.getSourceLabware() + ", " + sourcePlates.get(j).getLabware());
+				
 				if (s.getSourceName().equals(sourcePlates.get(j).getName()) & 
 						s.getSourceLabware().equals(sourcePlates.get(j).getLabware())) {
 					plateFound = true;
@@ -100,6 +101,8 @@ public class RunController {
 			}
 			//Set the samples source dilution to the source position
 			currentSourcePlate.setDilution(s.getSource(), s.getSourceWellNumber());
+			//assign the sample to the source dilution
+			s.getSource().setSample(s);
 			
 			//pd = s.getPrepDilutions();
 		}
@@ -188,6 +191,7 @@ public class RunController {
 		} else {
 			dilution.setSource(sample.getPrepDilutions().get(sample.getPrepDilutions().size() - 1));
 		}
+		dilution.setSample(sample);
 		dilution.getSource().subtractVol(dilution.getSampleVol());
 	}
 	

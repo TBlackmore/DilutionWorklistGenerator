@@ -1,18 +1,11 @@
 import static org.junit.Assert.*;
 
-<<<<<<< HEAD
-=======
 import org.junit.After;
 import org.junit.Before;
->>>>>>> ClassCull
+
 import org.junit.Test;
 
 /**
- * 
- */
-
-/**
-<<<<<<< HEAD
  * @author Tim
  *
  */
@@ -47,31 +40,7 @@ public class PlateTest{
 		assertTrue(testTargetPlate.wellCol(17 ) == 1 );
 		assertTrue(testTargetPlate.wellRow(384) == 15);
 		assertTrue(testTargetPlate.wellCol(384) == 23);
-=======
- * @author tim
- *
- */
-public class PlateTest {
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@Before
-	public void setUp() throws Exception {
-		Plate testPlate1 = new Plate (8,12, "96 well plate", 200, 20);
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@After
-	public void tearDown() throws Exception {
-	}
-
-	@Test
-	public void test() {
-		fail("Not yet implemented");
->>>>>>> ClassCull
 	}
 
 }

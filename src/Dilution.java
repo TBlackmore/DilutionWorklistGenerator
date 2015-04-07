@@ -5,6 +5,7 @@ public class Dilution {
 	private double stepDilutionFactor;
 	private double totalDilutionFactor;
 	private double remainingVol;
+	private Sample sample;
 	private Dilution source;
 	private Plate plate;
 	private int wellNum;
@@ -37,7 +38,12 @@ public class Dilution {
 		return("sampleVol = " + sampleVol + ", bufferVol = " + bufferVol +
 				", stepDil = " + stepDilutionFactor + ", totalDil = " + totalDilutionFactor);
 	}
-	
+	public void setSample(Sample sample) {
+		this.sample = sample;
+	}
+	public Sample getSample() {
+		return this.sample;
+	}
 	public Plate getPlate() {
 		return plate;
 	}

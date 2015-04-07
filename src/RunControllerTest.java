@@ -87,8 +87,9 @@ public class RunControllerTest {
 				
 				ArrayList<Sample> testSamples = new ArrayList<Sample>();
 				testSamples.add(sample1);
+				IO runIO = new IO();
 				
-				RunController testRun = new RunController(testPrepPlate, testTargetPlate, testSamples);
+				RunController testRun = new RunController(runIO, testPrepPlate, testTargetPlate, testSamples);
 				assertTrue(false);
 	}
 

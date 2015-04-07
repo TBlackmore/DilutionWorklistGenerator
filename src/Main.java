@@ -35,11 +35,11 @@ public class Main {
 		//multiple dilution steps required
 		Sample sample1 = new Sample(1,"sample1",testSourcePlate.getName(),testSourcePlate.getLabware(),"sample",1,60000000,2,1.5,2,2,true);
 		//Can't reach target dil during transfer on first step
-		Sample sample2 = new Sample(1,"sample2",testSourcePlate.getName(),testSourcePlate.getLabware(),"sample",1,10  ,2,1.5,2,2,true); 
+		Sample sample2 = new Sample(2,"sample2",testSourcePlate.getName(),testSourcePlate.getLabware(),"sample",3,10  ,2,1.5,2,2,true); 
 		//First step is target dil during transfer
-		Sample sample3 = new Sample(1,"sample3",testSourcePlate.getName(),testSourcePlate.getLabware(),"sample",1,9   ,2,1.5,2,2,true);  
+		Sample sample3 = new Sample(3,"sample3",testSourcePlate.getName(),testSourcePlate.getLabware(),"sample",4,9   ,2,1.5,2,2,true);  
 		// No dilution, to be run neat
-		Sample sample4 = new Sample(1,"sample4",testSourcePlate.getName(),testSourcePlate.getLabware(),"sample",1,1   ,2,1.5,2,2,true);  
+		Sample sample4 = new Sample(4,"sample4",testSourcePlate.getName(),testSourcePlate.getLabware(),"sample",5,1   ,2,1.5,2,2,true);  
 		
 		ArrayList<Sample> testSamples = new ArrayList<Sample>();
 		testSamples.add(sample1);
@@ -50,12 +50,13 @@ public class Main {
 		IO runIO = new IO();
 		ArrayList<Sample> importedSamples = runIO.openFile("example_input.csv");
 		
-<<<<<<< HEAD
-		RunController testRun = new RunController(testPrepPlate, testTargetPlate, importedSamples);
-=======
-		RunController testRun = new RunController(runIO, testPrepPlate, testTargetPlate, testSamples);
->>>>>>> ClassCull
+		
+		RunController testRun = new RunController(runIO, testPrepPlate, testTargetPlate, importedSamples);
+
+		
+		new GUI(testRun, runIO);
 		System.out.println("Test script completed?");
+		
 	}
 
 }

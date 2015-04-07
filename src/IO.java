@@ -21,11 +21,10 @@ public class IO {
     public int dilutionReplicates;
     public int assayReplicates;
     public boolean includeInAssay;
-    
+    public String[] inputHeaders;
     
     public IO () {
     	//openFile(filename);
-    	
     }
     public PrintWriter openOutputStream (String filename) throws IOException {
     	PrintWriter out = new PrintWriter(filename);
@@ -36,11 +35,18 @@ public class IO {
 	    	pw.close();
     	}
     }
+    public String[] getHeaders() {
+    	return this.inputHeaders;
+    }
+    public ArrayList<Sample> getSampleList() {
+    	return this.sampleList;
+    }
+    
     public ArrayList<Sample> openFile(String filename) {
          
     	try {
             s = new Scanner(new BufferedReader(new FileReader(filename)));
-            System.out.println(s.nextLine());
+            inputHeaders = s.nextLine().split(",");
             while (s.hasNextLine()) {
             	//Split string into pre-defined components
             	line = s.nextLine().split(",");

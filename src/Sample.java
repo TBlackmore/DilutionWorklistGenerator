@@ -71,6 +71,24 @@ public class Sample {
 		this.source = new Dilution(1.0);
 	}
 	
+	public String[] getSampleAsStrings() {
+    	String[] sampleAsString= {
+    		String.valueOf(iDnum),
+    		name,
+    		sourceName,
+    		sourceLabware,
+    		sampleType,
+    		null,
+    		String.valueOf(sourceWellNumber),
+    		String.valueOf(targetDilutionFactor),
+    		String.valueOf(numberOfSerialDilutions),
+    		String.valueOf(serialDilutionFactor),
+    		String.valueOf(dilutionReplicates),
+    		String.valueOf(assayReplicates),
+    		String.valueOf(includeInAssay)
+    	};
+    	return sampleAsString;
+    }
 	public ArrayList<Dilution> getPrepDilutions() {
 		return prepDilutions;
 	}

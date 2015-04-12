@@ -8,6 +8,7 @@ public class GUI extends JFrame {
 		
 		JPanel display = new JPanel();
 		
+		
 		//Import all the samples and convert their details to strings
 		String[] sampleTableHeaders = io.getHeaders();
 		Sample[] sampleArray = new Sample[io.getSampleList().size()];
@@ -33,14 +34,20 @@ public class GUI extends JFrame {
 		//Display all the source plates
 		JLabel sourcePlateLabel = new JLabel("Source Plates");
 		display.add(sourcePlateLabel);
-		JPanel sourcePlateTablePanel = new JPanel();
-
+		//JPanel sourcePlateTablePanel = new JPanel();		
 		ArrayList<JTable> sourcePlateTables = this.platesToTables(rc.getSourcePlates());
 		this.addTablesToPanel(sourcePlateTables, display);
+		
+		//Display all the dilution plated
+		JLabel dilutionPlateLabel = new JLabel("Dilution Plates");
+		display.add(dilutionPlateLabel);
+		ArrayList<JTable> dilutionPlateTables = this.platesToTables(rc.getPrepPlates());
+		this.addTablesToPanel(dilutionPlateTables, display);
 		
 		
 		//display.add(sourcePlateTablePanel);
 		//display.setVisible(true);
+		
 		add(display);
 		setSize(1200,800);
 		setVisible(true);
@@ -59,7 +66,8 @@ public class GUI extends JFrame {
 				for (int k = 0; k < p.getCols(); k++) {
 					Dilution d = p.getDilution(j,k);
 					if (d != null) {
-						data[j][k] = d.getSample().getName();
+						data[j][k] = String.valueOf(d.getSample().getiDnum()) + ": \n"
+								+ d.getSample().getName();
 					}
 				}
 			}
@@ -68,6 +76,8 @@ public class GUI extends JFrame {
 				tableHeaders[l - 1] = String.valueOf(l);
 			}
 			JTable t = new JTable(data, tableHeaders);
+			t.setGridColor(getBackground());
+			t.setRowHeight(50);
 			tables.add(t);
 		}
 		return tables;

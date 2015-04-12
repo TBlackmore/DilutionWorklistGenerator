@@ -67,7 +67,10 @@ public class RunController {
 		return sourcePlates;
 	}
 
-	
+	public ArrayList<Plate> getPrepPlates() {
+		return prepPlates;
+	}
+
 	
 	/**
 	 * Assign the source well to each sample dilution

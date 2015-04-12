@@ -29,27 +29,53 @@ public class GUI extends JFrame {
 		sampleTableScrollPane.setPreferredSize(new Dimension(250,250));
 		display.add(sampleTableScrollPane);
 		
-		//Display the source plate
-		Plate p = rc.getSourcePlates().get(0);
-		String[][] data;
-		data = new String[p.getRows()][p.getCols()];
-	    for (int i = 0; i < p.getRows(); i++) {
-	    	for (int j = 0; j < p.getCols(); j++) {
-	    		Dilution d = p.getDilution(i,j);
-	    		if (d != null) {
-	    			data[i][j] = d.getSample().getName();
-	    		}
-	    	}
-	    }
-	    String[] plateHeaders = {"1","1","1","1","1","1","1","1","1","1","1","1"};
-	    JTable pTable = new JTable(data, plateHeaders);
-		display.add(pTable);
+		
+		//Display all the source plates
+		JLabel sourcePlateLabel = new JLabel("Source Plates");
+		display.add(sourcePlateLabel);
+		JPanel sourcePlateTablePanel = new JPanel();
+
+		ArrayList<JTable> sourcePlateTables = this.platesToTables(rc.getSourcePlates());
+		this.addTablesToPanel(sourcePlateTables, display);
+		
+		
+		//display.add(sourcePlateTablePanel);
 		//display.setVisible(true);
 		add(display);
-		setSize(1600,800);
+		setSize(1200,800);
 		setVisible(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
 		System.out.println("GUI created");
+	}
+	public ArrayList<JTable> platesToTables (ArrayList<Plate> plates) {
+		ArrayList<JTable> tables = new ArrayList<JTable>();
+		Plate p;
+		for (int i = 0; i < plates.size(); i++) {
+			p = plates.get(i);
+			String[][] data;
+			data = new String[p.getRows()][p.getCols()];
+			for (int j = 0; j < p.getRows(); j++) {
+				for (int k = 0; k < p.getCols(); k++) {
+					Dilution d = p.getDilution(j,k);
+					if (d != null) {
+						data[j][k] = d.getSample().getName();
+					}
+				}
+			}
+			String[] tableHeaders = new String[p.getCols()];
+			for (int l = 1; l <= p.getCols(); l++) {
+				tableHeaders[l - 1] = String.valueOf(l);
+			}
+			JTable t = new JTable(data, tableHeaders);
+			tables.add(t);
+		}
+		return tables;
+	}
+	
+	public void addTablesToPanel (ArrayList<JTable> tables, JPanel panel) {
+		for (int i = 0; i < tables.size(); i++) {
+			panel.add(tables.get(i));
+		}
 	}
 }

@@ -1,5 +1,6 @@
 import javax.swing.*;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.ArrayList;
 
@@ -7,7 +8,8 @@ public class GUI extends JFrame {
 	public GUI(RunController rc, IO io) {
 		
 		JPanel display = new JPanel();
-		
+		display.setSize(1200,800);
+		JScrollPane scroll = new JScrollPane(display);
 		
 		//Import all the samples and convert their details to strings
 		String[] sampleTableHeaders = io.getHeaders();
@@ -27,7 +29,7 @@ public class GUI extends JFrame {
 		sampleTable.setAutoResizeMode(sampleTable.AUTO_RESIZE_OFF);
 		JScrollPane sampleTableScrollPane = new JScrollPane(sampleTable);
 		//sampleTableScrollPane.setSize(200,200);
-		sampleTableScrollPane.setPreferredSize(new Dimension(250,250));
+		sampleTableScrollPane.setPreferredSize(new Dimension(150,150));
 		display.add(sampleTableScrollPane);
 		
 		
@@ -47,8 +49,8 @@ public class GUI extends JFrame {
 		
 		//display.add(sourcePlateTablePanel);
 		//display.setVisible(true);
-		
-		add(display);
+		this.setLayout(new BorderLayout());
+		add(scroll, BorderLayout.CENTER);
 		setSize(1200,800);
 		setVisible(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -77,7 +79,7 @@ public class GUI extends JFrame {
 			}
 			JTable t = new JTable(data, tableHeaders);
 			t.setGridColor(getBackground());
-			t.setRowHeight(50);
+			//t.setRowHeight(50);
 			tables.add(t);
 		}
 		return tables;

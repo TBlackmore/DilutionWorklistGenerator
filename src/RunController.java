@@ -269,10 +269,19 @@ public class RunController {
 				currentDilution = pd.get(j);
 				currentPlate.setDilution(currentDilution, nextWell);
 				//if the current well is in the last column and there's another dilution create a new plate
+				//FIXME: adds a new plate each time
 				if (currentPlate.isLastCol(nextWell) && (pd.size() >= j)) {
-					nextPlate = new Plate(prepPlateType, prepPlateType.getName() + (prepPlates.size() + 1));
-					prepPlates.add(nextPlate);
-					currentPlate = nextPlate;
+					int currentPlateIndex = prepPlates.indexOf(currentPlate);
+					if ((prepPlates.size() - 1) > currentPlateIndex) {
+						currentPlate = prepPlates.get(currentPlateIndex + 1);
+					} else {
+						nextPlate = new Plate(prepPlateType, prepPlateType.getName() + (prepPlates.size() + 1));
+						prepPlates.add(nextPlate);
+						currentPlate = nextPlate;
+					}
+					//nextPlate = new Plate(prepPlateType, prepPlateType.getName() + (prepPlates.size() + 1));
+					//prepPlates.add(nextPlate);
+					//currentPlate = nextPlate;
 				}
 				//nextWell is one well to the right
 				currentWell = nextWell;
@@ -291,7 +300,7 @@ public class RunController {
 					
 					//if the next plate doesn't exist, create it
 					int currentPlateIndex = prepPlates.indexOf(currentPlate);
-					if (prepPlates.size() > currentPlateIndex) {
+					if ((prepPlates.size() - 1) > currentPlateIndex) {
 						currentPlate = prepPlates.get(currentPlateIndex + 1);
 					} else {
 						nextPlate = new Plate(prepPlateType, prepPlateType.getName() + (prepPlates.size() + 1));

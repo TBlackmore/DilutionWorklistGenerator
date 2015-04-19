@@ -91,12 +91,8 @@ public class Plate {
 	public int[] nextRowColRight (int[] rowCol) {
 		int row = rowCol[0];
 		int col = rowCol[1];
-		if ((row == rows) && (col == cols)) {
-			row = 1;
+		if (col == cols) {
 			col = 1;
-		} else if (col == cols) {
-			col = 1;
-			row++;
 		} else if (col < cols) {
 			col++;
 		}  

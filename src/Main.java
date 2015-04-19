@@ -1,3 +1,4 @@
+import java.awt.EventQueue;
 import java.util.ArrayList;
 
 public class Main {
@@ -47,14 +48,25 @@ public class Main {
 		testSamples.add(sample3);
 		testSamples.add(sample4);
 		
-		IO runIO = new IO();
+		final IO runIO = new IO();
 		ArrayList<Sample> importedSamples = runIO.openFile("example_input.csv");
 		
 		
-		RunController testRun = new RunController(runIO, testPrepPlate, testTargetPlate, importedSamples);
-
+		final RunController testRun = new RunController(runIO, testPrepPlate, testTargetPlate, importedSamples);
+		System.out.println("Attempting to open UI");
 		
-		new GUI(testRun, runIO);
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					UI frame = new UI(testRun, runIO);
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		//new UI(testRun, runIO);
+		//new GUI(testRun, runIO);
 		System.out.println("Test script completed?");
 		
 	}

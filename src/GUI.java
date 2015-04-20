@@ -77,7 +77,7 @@ public class GUI extends JFrame {
 			}
 			JTable t = new JTable(data, tableHeaders);
 			t.setGridColor(getBackground());
-			t.setRowHeight(50);
+			//t.setRowHeight(50);
 			tables.add(t);
 		}
 		return tables;

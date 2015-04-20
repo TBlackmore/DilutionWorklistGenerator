@@ -1,16 +1,8 @@
-/.DS_Store
 /Dilution.class
 /GUI.class
 /GUIPlate.class
 /IO.class
 /IOTest.class
-/JTableRowHeader$1.class
-/JTableRowHeader$2.class
-/JTableRowHeader$3.class
-/JTableRowHeader$4.class
-/JTableRowHeader$5$1.class
-/JTableRowHeader$5.class
-/JTableRowHeader.class
 /Main.class
 /Plate.class
 /PlateTest.class

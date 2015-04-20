@@ -40,6 +40,15 @@ public class PlateTest{
 		assertTrue(testTargetPlate.wellCol(17 ) == 1 );
 		assertTrue(testTargetPlate.wellRow(384) == 15);
 		assertTrue(testTargetPlate.wellCol(384) == 23);
+		
+		int[] testRowCol = {1,1};
+		assertTrue(testPrepPlate.rowColToWellNumber(testRowCol) == 1);
+		testRowCol[0] = 8;
+		testRowCol[1] = 1;
+		assertTrue(testPrepPlate.rowColToWellNumber(testRowCol) == 8);
+		testRowCol[0] = 8;
+		testRowCol[1] = 12;
+		assertTrue(testPrepPlate.rowColToWellNumber(testRowCol) == 96);
 
 	}
 

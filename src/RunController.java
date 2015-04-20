@@ -35,8 +35,9 @@ public class RunController {
 		}
 
 		setSampleSources(samples);
-		arrangePrepDilutions(samples);
-
+		//arrangePrepDilutions(samples);
+		arrangePrepDilutionsInRows();
+		
 		//open output stream
 		try {
 			out = runIO.openOutputStream("test.txt");
@@ -44,13 +45,16 @@ public class RunController {
 		} catch (IOException e) {
 			System.out.println("Error opening file: " + e.getMessage());
 		}
-		//output the commands to the file
-		out.print("Hello");
 
 		//Print out the sample info for each sample
-		for (int s = 0; s < samples.size(); s++) {
-			currentSample = samples.get(s);
-			System.out.println(currentSample.getInfo());
+		for (int i = 0; i < samples.size(); i++) {
+			ArrayList<Dilution> pd = samples.get(i).getPrepDilutions();
+			
+			for (int j = 0; j < pd.size(); j++) {
+				out.println(aspDilCmd(pd.get(j)));
+				out.println(aspSampleCmd(pd.get(j)));
+				out.println(dispenseBothCmd(pd.get(j)));
+			}
 		}
 		//close the output stream
 		runIO.closeOutputStream(out);
@@ -133,7 +137,6 @@ public class RunController {
 	 */
 	public Sample generateDilutions (Sample sample) {
 		
-		//tests
 		boolean sampleSourceAssigned;
 		sampleSourceAssigned = false;
 		double nextSampleVol;
@@ -203,7 +206,7 @@ public class RunController {
 	 * 
 	 * @param samples
 	 */
-	public void arrangePrepDilutions(ArrayList<Sample> samples) {
+	/*public void arrangePrepDilutions(ArrayList<Sample> samples) {
 		Sample s;
 		ArrayList<Dilution> pd;
 		int nextWell = 1;
@@ -239,14 +242,86 @@ public class RunController {
 			nextWell = recallWell + 1;
 		}
 		
+	}*/
+	
+	public void arrangePrepDilutionsInRows() {
+		Sample s;
+		ArrayList<Dilution> pd;
+		Plate currentPlate;
+		Plate nextPlate;
+		Plate recallPlate;
+		Dilution currentDilution;
+		int[] currentWell = {1, 1};
+		int[] nextWell = {1, 1};
+		int[] recallWell = {1,1};
+		//Create the first prepPlate
+		currentPlate = new Plate(prepPlateType, prepPlateType.getName() + (prepPlates.size() + 1));
+		prepPlates.add(currentPlate);
+		//Loop through each sample
+		for (int i = 0; i < samples.size(); i++) {
+			s = samples.get(i);
+			pd = s.getPrepDilutions();
+			//store the the next well down to come back to after going right
+			recallWell = nextWell;
+			recallPlate = currentPlate;
+			//loop through each prep dilution
+			for (int j = 0; j < pd.size(); j++) {
+				currentDilution = pd.get(j);
+				currentPlate.setDilution(currentDilution, nextWell);
+				//if the current well is in the last column and there's another dilution create a new plate
+				//FIXME: adds a new plate each time
+				if (currentPlate.isLastCol(nextWell) && (pd.size() >= j)) {
+					int currentPlateIndex = prepPlates.indexOf(currentPlate);
+					if ((prepPlates.size() - 1) > currentPlateIndex) {
+						currentPlate = prepPlates.get(currentPlateIndex + 1);
+					} else {
+						nextPlate = new Plate(prepPlateType, prepPlateType.getName() + (prepPlates.size() + 1));
+						prepPlates.add(nextPlate);
+						currentPlate = nextPlate;
+					}
+					//nextPlate = new Plate(prepPlateType, prepPlateType.getName() + (prepPlates.size() + 1));
+					//prepPlates.add(nextPlate);
+					//currentPlate = nextPlate;
+				}
+				//nextWell is one well to the right
+				currentWell = nextWell;
+				nextWell = currentPlate.nextRowColRight(currentWell);
+			}
+			//go back to before all the moves to the right
+			currentPlate = recallPlate;
+			currentWell = recallWell;
+			//find the next available well and set it to nextWell
+			nextWell = currentWell;
+			System.out.println("nextWell = " + nextWell[0] + ", " + nextWell[1]);
+			while (currentPlate.getDilution(nextWell) != null) {
+				
+				//if the last well in the plate is reached go to the next plate in the list
+				if (currentPlate.isLastWell(nextWell)) {
+					
+					//if the next plate doesn't exist, create it
+					int currentPlateIndex = prepPlates.indexOf(currentPlate);
+					if ((prepPlates.size() - 1) > currentPlateIndex) {
+						currentPlate = prepPlates.get(currentPlateIndex + 1);
+					} else {
+						nextPlate = new Plate(prepPlateType, prepPlateType.getName() + (prepPlates.size() + 1));
+						prepPlates.add(nextPlate);
+						currentPlate = nextPlate;
+					}
+				}
+				//move nextWell down
+				nextWell = currentPlate.nextRowColDown(nextWell);
+				System.out.println("nextWell = " + nextWell[0] + ", " + nextWell[1]);
+			}
+		}
 	}
+	
 	// FIXME
 	// variables that need to be configurable but aren't yet
 	private String diluentName = "Diluent";
 	private String diluentLabware = "Trough 100ml";
 	private double diluentUsed = 0.0;
 	private int diluentTroughVol = 90000;
-	private int diluentTroughCount;
+	private int diluentTroughCount = 1;
 	private int diluentAspPos = 1;
 	/**
 	 * Get the command to aspirate diluent for the given dilution
@@ -256,11 +331,12 @@ public class RunController {
 	 */
 	public String aspDilCmd (Dilution d) {
 		String aspDil;		
-		aspDil = "A;" + diluentName + diluentTroughCount + ";;" + diluentLabware + ";" + diluentAspPos + 1 
+		aspDil = "A;" + diluentName + diluentTroughCount + ";;" + diluentLabware + ";" + (diluentAspPos + 1) 
 				+ ";;" + d.getBufferVol() + ";;;";
+		//System.out.println(aspDil);
 		diluentAspPos = (diluentAspPos + 1) % 8;
 		diluentUsed = diluentUsed + d.getBufferVol();
-		diluentTroughCount = (int) (diluentUsed / diluentTroughVol);
+		diluentTroughCount = 1 + (int) (diluentUsed / diluentTroughVol);
 		return aspDil;
 	}
 	/**
